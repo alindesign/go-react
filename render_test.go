@@ -26,7 +26,14 @@ func App() *Element {
 	}, List(4))
 }
 
-func TestCreateElement(t *testing.T) {
+func TestRender(t *testing.T) {
+	t.Run("it should render an empty div", func(t *testing.T) {
+		div, err := Render(CreateElement("div", nil))
+
+		assert.NoError(t, err)
+		assert.Equal(t, `<div></div>`, div)
+	})
+
 	t.Run("it should render a simple div", func(t *testing.T) {
 		div, err := Render(CreateElement("div", Props{
 			"className": "ui__container",
@@ -59,6 +66,15 @@ func TestCreateElement(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, `<div data="{&#34;json&#34;: &#34;true&#34;}">Text &lt;script&gt;function () { alert(&#39;broken&#39;); }&lt;/script&gt;</div>`, div)
+	})
+
+	t.Run("it should correctly run a void element", func(t *testing.T) {
+		div, err := Render(CreateElement("img", Props{
+			"src": `url`,
+		}, "Children elements text"))
+
+		assert.NoError(t, err)
+		assert.Equal(t, `<img src="url" />`, div)
 	})
 }
 

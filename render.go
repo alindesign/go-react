@@ -8,6 +8,18 @@ import (
 	"sync"
 )
 
+var voidElements = []string{"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+func isVoidElement(element string) bool {
+	for _, el := range voidElements {
+		if el == element {
+			return true
+		}
+	}
+
+	return false
+}
+
 func genHtml(tag string, attrs Props, childs []string) string {
 	attrsStr := ""
 
@@ -19,7 +31,18 @@ func genHtml(tag string, attrs Props, childs []string) string {
 		attrsStr += key + "=\"" + template.HTMLEscapeString(cast.ToString(value)) + "\" "
 	}
 
-	content := "<" + tag + " " + strings.TrimSpace(attrsStr) + ">"
+	attrsStr = strings.TrimSpace(attrsStr)
+	content := "<" + tag
+
+	if attrsStr != "" {
+		content += " " + attrsStr
+	}
+
+	if isVoidElement(tag) {
+		return content + " />"
+	}
+
+	content += ">"
 	for _, child := range childs {
 		content += child
 	}
