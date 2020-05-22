@@ -1,535 +1,530 @@
 package react
 
 import (
-	"github.com/fatih/structs"
 	"github.com/iancoleman/strcase"
 	"github.com/spf13/cast"
 	"strings"
 )
 
 type Style struct {
-	AlignContent                   interface{} `structs:",omitempty"`
-	AlignItems                     interface{} `structs:",omitempty"`
-	AlignSelf                      interface{} `structs:",omitempty"`
-	AlignmentBaseline              interface{} `structs:",omitempty"`
-	All                            interface{} `structs:",omitempty"`
-	Animation                      interface{} `structs:",omitempty"`
-	AnimationDelay                 interface{} `structs:",omitempty"`
-	AnimationDirection             interface{} `structs:",omitempty"`
-	AnimationDuration              interface{} `structs:",omitempty"`
-	AnimationFillMode              interface{} `structs:",omitempty"`
-	AnimationIterationCount        interface{} `structs:",omitempty"`
-	AnimationName                  interface{} `structs:",omitempty"`
-	AnimationPlayState             interface{} `structs:",omitempty"`
-	AnimationTimingFunction        interface{} `structs:",omitempty"`
-	BackdropFilter                 interface{} `structs:",omitempty"`
-	BackfaceVisibility             interface{} `structs:",omitempty"`
-	Background                     interface{} `structs:",omitempty"`
-	BackgroundAttachment           interface{} `structs:",omitempty"`
-	BackgroundBlendMode            interface{} `structs:",omitempty"`
-	BackgroundClip                 interface{} `structs:",omitempty"`
-	BackgroundColor                interface{} `structs:",omitempty"`
-	BackgroundImage                interface{} `structs:",omitempty"`
-	BackgroundOrigin               interface{} `structs:",omitempty"`
-	BackgroundPosition             interface{} `structs:",omitempty"`
-	BackgroundPositionX            interface{} `structs:",omitempty"`
-	BackgroundPositionY            interface{} `structs:",omitempty"`
-	BackgroundRepeat               interface{} `structs:",omitempty"`
-	BackgroundRepeatX              interface{} `structs:",omitempty"`
-	BackgroundRepeatY              interface{} `structs:",omitempty"`
-	BackgroundSize                 interface{} `structs:",omitempty"`
-	BaselineShift                  interface{} `structs:",omitempty"`
-	BlockSize                      interface{} `structs:",omitempty"`
-	Border                         interface{} `structs:",omitempty"`
-	BorderBlockEnd                 interface{} `structs:",omitempty"`
-	BorderBlockEndColor            interface{} `structs:",omitempty"`
-	BorderBlockEndStyle            interface{} `structs:",omitempty"`
-	BorderBlockEndWidth            interface{} `structs:",omitempty"`
-	BorderBlockStart               interface{} `structs:",omitempty"`
-	BorderBlockStartColor          interface{} `structs:",omitempty"`
-	BorderBlockStartStyle          interface{} `structs:",omitempty"`
-	BorderBlockStartWidth          interface{} `structs:",omitempty"`
-	BorderBottom                   interface{} `structs:",omitempty"`
-	BorderBottomColor              interface{} `structs:",omitempty"`
-	BorderBottomLeftRadius         interface{} `structs:",omitempty"`
-	BorderBottomRightRadius        interface{} `structs:",omitempty"`
-	BorderBottomStyle              interface{} `structs:",omitempty"`
-	BorderBottomWidth              interface{} `structs:",omitempty"`
-	BorderCollapse                 interface{} `structs:",omitempty"`
-	BorderColor                    interface{} `structs:",omitempty"`
-	BorderImage                    interface{} `structs:",omitempty"`
-	BorderImageOutset              interface{} `structs:",omitempty"`
-	BorderImageRepeat              interface{} `structs:",omitempty"`
-	BorderImageSlice               interface{} `structs:",omitempty"`
-	BorderImageSource              interface{} `structs:",omitempty"`
-	BorderImageWidth               interface{} `structs:",omitempty"`
-	BorderInlineEnd                interface{} `structs:",omitempty"`
-	BorderInlineEndColor           interface{} `structs:",omitempty"`
-	BorderInlineEndStyle           interface{} `structs:",omitempty"`
-	BorderInlineEndWidth           interface{} `structs:",omitempty"`
-	BorderInlineStart              interface{} `structs:",omitempty"`
-	BorderInlineStartColor         interface{} `structs:",omitempty"`
-	BorderInlineStartStyle         interface{} `structs:",omitempty"`
-	BorderInlineStartWidth         interface{} `structs:",omitempty"`
-	BorderLeft                     interface{} `structs:",omitempty"`
-	BorderLeftColor                interface{} `structs:",omitempty"`
-	BorderLeftStyle                interface{} `structs:",omitempty"`
-	BorderRadius                   interface{} `structs:",omitempty"`
-	BorderLeftWidth                interface{} `structs:",omitempty"`
-	BorderRight                    interface{} `structs:",omitempty"`
-	BorderRightColor               interface{} `structs:",omitempty"`
-	BorderRightStyle               interface{} `structs:",omitempty"`
-	BorderRightWidth               interface{} `structs:",omitempty"`
-	BorderSpacing                  interface{} `structs:",omitempty"`
-	BorderStyle                    interface{} `structs:",omitempty"`
-	BorderTop                      interface{} `structs:",omitempty"`
-	BorderTopColor                 interface{} `structs:",omitempty"`
-	BorderTopLeftRadius            interface{} `structs:",omitempty"`
-	BorderTopRightRadius           interface{} `structs:",omitempty"`
-	BorderTopStyle                 interface{} `structs:",omitempty"`
-	BorderTopWidth                 interface{} `structs:",omitempty"`
-	BorderWidth                    interface{} `structs:",omitempty"`
-	Bottom                         interface{} `structs:",omitempty"`
-	BoxShadow                      interface{} `structs:",omitempty"`
-	BoxSizing                      interface{} `structs:",omitempty"`
-	BreakAfter                     interface{} `structs:",omitempty"`
-	BreakBefore                    interface{} `structs:",omitempty"`
-	BreakInside                    interface{} `structs:",omitempty"`
-	BufferedRendering              interface{} `structs:",omitempty"`
-	CaptionSide                    interface{} `structs:",omitempty"`
-	CaretColor                     interface{} `structs:",omitempty"`
-	Clear                          interface{} `structs:",omitempty"`
-	Clip                           interface{} `structs:",omitempty"`
-	ClipPath                       interface{} `structs:",omitempty"`
-	ClipRule                       interface{} `structs:",omitempty"`
-	Color                          interface{} `structs:",omitempty"`
-	ColorInterpolation             interface{} `structs:",omitempty"`
-	ColorInterpolationFilters      interface{} `structs:",omitempty"`
-	ColorRendering                 interface{} `structs:",omitempty"`
-	ColorScheme                    interface{} `structs:",omitempty"`
-	ColumnCount                    interface{} `structs:",omitempty"`
-	ColumnFill                     interface{} `structs:",omitempty"`
-	ColumnGap                      interface{} `structs:",omitempty"`
-	ColumnRule                     interface{} `structs:",omitempty"`
-	ColumnRuleColor                interface{} `structs:",omitempty"`
-	ColumnRuleStyle                interface{} `structs:",omitempty"`
-	ColumnRuleWidth                interface{} `structs:",omitempty"`
-	ColumnSpan                     interface{} `structs:",omitempty"`
-	ColumnWidth                    interface{} `structs:",omitempty"`
-	Columns                        interface{} `structs:",omitempty"`
-	Contain                        interface{} `structs:",omitempty"`
-	ContainIntrinsicSize           interface{} `structs:",omitempty"`
-	Content                        interface{} `structs:",omitempty"`
-	CounterIncrement               interface{} `structs:",omitempty"`
-	CounterReset                   interface{} `structs:",omitempty"`
-	Cursor                         interface{} `structs:",omitempty"`
-	Cx                             interface{} `structs:",omitempty"`
-	Cy                             interface{} `structs:",omitempty"`
-	D                              interface{} `structs:",omitempty"`
-	Direction                      interface{} `structs:",omitempty"`
-	Display                        interface{} `structs:",omitempty"`
-	DominantBaseline               interface{} `structs:",omitempty"`
-	EmptyCells                     interface{} `structs:",omitempty"`
-	Fill                           interface{} `structs:",omitempty"`
-	FillOpacity                    interface{} `structs:",omitempty"`
-	FillRule                       interface{} `structs:",omitempty"`
-	Filter                         interface{} `structs:",omitempty"`
-	Flex                           interface{} `structs:",omitempty"`
-	FlexBasis                      interface{} `structs:",omitempty"`
-	FlexDirection                  interface{} `structs:",omitempty"`
-	FlexFlow                       interface{} `structs:",omitempty"`
-	FlexGrow                       interface{} `structs:",omitempty"`
-	FlexShrink                     interface{} `structs:",omitempty"`
-	FlexWrap                       interface{} `structs:",omitempty"`
-	Float                          interface{} `structs:",omitempty"`
-	FloodColor                     interface{} `structs:",omitempty"`
-	FloodOpacity                   interface{} `structs:",omitempty"`
-	Font                           interface{} `structs:",omitempty"`
-	FontDisplay                    interface{} `structs:",omitempty"`
-	FontFamily                     interface{} `structs:",omitempty"`
-	FontFeatureSettings            interface{} `structs:",omitempty"`
-	FontKerning                    interface{} `structs:",omitempty"`
-	FontOpticalSizing              interface{} `structs:",omitempty"`
-	FontSize                       interface{} `structs:",omitempty"`
-	FontStretch                    interface{} `structs:",omitempty"`
-	FontStyle                      interface{} `structs:",omitempty"`
-	FontVariant                    interface{} `structs:",omitempty"`
-	FontVariantCaps                interface{} `structs:",omitempty"`
-	FontVariantEastAsian           interface{} `structs:",omitempty"`
-	FontVariantLigatures           interface{} `structs:",omitempty"`
-	FontVariantNumeric             interface{} `structs:",omitempty"`
-	FontVariationSettings          interface{} `structs:",omitempty"`
-	FontWeight                     interface{} `structs:",omitempty"`
-	Gap                            interface{} `structs:",omitempty"`
-	Grid                           interface{} `structs:",omitempty"`
-	GridArea                       interface{} `structs:",omitempty"`
-	GridAutoColumns                interface{} `structs:",omitempty"`
-	GridAutoFlow                   interface{} `structs:",omitempty"`
-	GridAutoRows                   interface{} `structs:",omitempty"`
-	GridColumn                     interface{} `structs:",omitempty"`
-	GridColumnEnd                  interface{} `structs:",omitempty"`
-	GridColumnGap                  interface{} `structs:",omitempty"`
-	GridColumnStart                interface{} `structs:",omitempty"`
-	GridGap                        interface{} `structs:",omitempty"`
-	GridRow                        interface{} `structs:",omitempty"`
-	GridRowEnd                     interface{} `structs:",omitempty"`
-	GridRowGap                     interface{} `structs:",omitempty"`
-	GridRowStart                   interface{} `structs:",omitempty"`
-	GridTemplate                   interface{} `structs:",omitempty"`
-	GridTemplateAreas              interface{} `structs:",omitempty"`
-	GridTemplateColumns            interface{} `structs:",omitempty"`
-	GridTemplateRows               interface{} `structs:",omitempty"`
-	Height                         interface{} `structs:",omitempty"`
-	Hyphens                        interface{} `structs:",omitempty"`
-	ImageOrientation               interface{} `structs:",omitempty"`
-	ImageRendering                 interface{} `structs:",omitempty"`
-	InlineSize                     interface{} `structs:",omitempty"`
-	Isolation                      interface{} `structs:",omitempty"`
-	JustifyContent                 interface{} `structs:",omitempty"`
-	JustifyItems                   interface{} `structs:",omitempty"`
-	JustifySelf                    interface{} `structs:",omitempty"`
-	Left                           interface{} `structs:",omitempty"`
-	LetterSpacing                  interface{} `structs:",omitempty"`
-	LightingColor                  interface{} `structs:",omitempty"`
-	LineBreak                      interface{} `structs:",omitempty"`
-	LineHeight                     interface{} `structs:",omitempty"`
-	ListStyle                      interface{} `structs:",omitempty"`
-	ListStyleImage                 interface{} `structs:",omitempty"`
-	ListStylePosition              interface{} `structs:",omitempty"`
-	ListStyleType                  interface{} `structs:",omitempty"`
-	Margin                         interface{} `structs:",omitempty"`
-	MarginBlockEnd                 interface{} `structs:",omitempty"`
-	MarginBlockStart               interface{} `structs:",omitempty"`
-	MarginBottom                   interface{} `structs:",omitempty"`
-	MarginInlineEnd                interface{} `structs:",omitempty"`
-	MarginInlineStart              interface{} `structs:",omitempty"`
-	MarginLeft                     interface{} `structs:",omitempty"`
-	MarginRight                    interface{} `structs:",omitempty"`
-	MarginTop                      interface{} `structs:",omitempty"`
-	Marker                         interface{} `structs:",omitempty"`
-	MarkerEnd                      interface{} `structs:",omitempty"`
-	MarkerMid                      interface{} `structs:",omitempty"`
-	MarkerStart                    interface{} `structs:",omitempty"`
-	Mask                           interface{} `structs:",omitempty"`
-	MaskType                       interface{} `structs:",omitempty"`
-	MaxBlockSize                   interface{} `structs:",omitempty"`
-	MaxHeight                      interface{} `structs:",omitempty"`
-	MaxInlineSize                  interface{} `structs:",omitempty"`
-	MaxWidth                       interface{} `structs:",omitempty"`
-	MaxZoom                        interface{} `structs:",omitempty"`
-	MinBlockSize                   interface{} `structs:",omitempty"`
-	MinHeight                      interface{} `structs:",omitempty"`
-	MinInlineSize                  interface{} `structs:",omitempty"`
-	MinWidth                       interface{} `structs:",omitempty"`
-	MinZoom                        interface{} `structs:",omitempty"`
-	MixBlendMode                   interface{} `structs:",omitempty"`
-	ObjectFit                      interface{} `structs:",omitempty"`
-	ObjectPosition                 interface{} `structs:",omitempty"`
-	Offset                         interface{} `structs:",omitempty"`
-	OffsetDistance                 interface{} `structs:",omitempty"`
-	OffsetPath                     interface{} `structs:",omitempty"`
-	OffsetRotate                   interface{} `structs:",omitempty"`
-	Opacity                        interface{} `structs:",omitempty"`
-	Order                          interface{} `structs:",omitempty"`
-	Orientation                    interface{} `structs:",omitempty"`
-	Orphans                        interface{} `structs:",omitempty"`
-	Outline                        interface{} `structs:",omitempty"`
-	OutlineColor                   interface{} `structs:",omitempty"`
-	OutlineOffset                  interface{} `structs:",omitempty"`
-	OutlineStyle                   interface{} `structs:",omitempty"`
-	OutlineWidth                   interface{} `structs:",omitempty"`
-	Overflow                       interface{} `structs:",omitempty"`
-	OverflowAnchor                 interface{} `structs:",omitempty"`
-	OverflowWrap                   interface{} `structs:",omitempty"`
-	OverflowX                      interface{} `structs:",omitempty"`
-	OverflowY                      interface{} `structs:",omitempty"`
-	OverscrollBehavior             interface{} `structs:",omitempty"`
-	OverscrollBehaviorBlock        interface{} `structs:",omitempty"`
-	OverscrollBehaviorInline       interface{} `structs:",omitempty"`
-	OverscrollBehaviorX            interface{} `structs:",omitempty"`
-	OverscrollBehaviorY            interface{} `structs:",omitempty"`
-	Padding                        interface{} `structs:",omitempty"`
-	PaddingBlockEnd                interface{} `structs:",omitempty"`
-	PaddingBlockStart              interface{} `structs:",omitempty"`
-	PaddingBottom                  interface{} `structs:",omitempty"`
-	PaddingInlineEnd               interface{} `structs:",omitempty"`
-	PaddingInlineStart             interface{} `structs:",omitempty"`
-	PaddingLeft                    interface{} `structs:",omitempty"`
-	PaddingRight                   interface{} `structs:",omitempty"`
-	PaddingTop                     interface{} `structs:",omitempty"`
-	PageBreakAfter                 interface{} `structs:",omitempty"`
-	PageBreakBefore                interface{} `structs:",omitempty"`
-	PageBreakInside                interface{} `structs:",omitempty"`
-	PaintOrder                     interface{} `structs:",omitempty"`
-	Perspective                    interface{} `structs:",omitempty"`
-	PerspectiveOrigin              interface{} `structs:",omitempty"`
-	PlaceContent                   interface{} `structs:",omitempty"`
-	PlaceItems                     interface{} `structs:",omitempty"`
-	PlaceSelf                      interface{} `structs:",omitempty"`
-	PointerEvents                  interface{} `structs:",omitempty"`
-	Position                       interface{} `structs:",omitempty"`
-	Quotes                         interface{} `structs:",omitempty"`
-	R                              interface{} `structs:",omitempty"`
-	Resize                         interface{} `structs:",omitempty"`
-	Right                          interface{} `structs:",omitempty"`
-	RowGap                         interface{} `structs:",omitempty"`
-	Rx                             interface{} `structs:",omitempty"`
-	Ry                             interface{} `structs:",omitempty"`
-	ScrollBehavior                 interface{} `structs:",omitempty"`
-	ScrollMargin                   interface{} `structs:",omitempty"`
-	ScrollMarginBlock              interface{} `structs:",omitempty"`
-	ScrollMarginBlockEnd           interface{} `structs:",omitempty"`
-	ScrollMarginBlockStart         interface{} `structs:",omitempty"`
-	ScrollMarginBottom             interface{} `structs:",omitempty"`
-	ScrollMarginInline             interface{} `structs:",omitempty"`
-	ScrollMarginInlineEnd          interface{} `structs:",omitempty"`
-	ScrollMarginInlineStart        interface{} `structs:",omitempty"`
-	ScrollMarginLeft               interface{} `structs:",omitempty"`
-	ScrollMarginRight              interface{} `structs:",omitempty"`
-	ScrollMarginTop                interface{} `structs:",omitempty"`
-	ScrollPadding                  interface{} `structs:",omitempty"`
-	ScrollPaddingBlock             interface{} `structs:",omitempty"`
-	ScrollPaddingBlockEnd          interface{} `structs:",omitempty"`
-	ScrollPaddingBlockStart        interface{} `structs:",omitempty"`
-	ScrollPaddingBottom            interface{} `structs:",omitempty"`
-	ScrollPaddingInline            interface{} `structs:",omitempty"`
-	ScrollPaddingInlineEnd         interface{} `structs:",omitempty"`
-	ScrollPaddingInlineStart       interface{} `structs:",omitempty"`
-	ScrollPaddingLeft              interface{} `structs:",omitempty"`
-	ScrollPaddingRight             interface{} `structs:",omitempty"`
-	ScrollPaddingTop               interface{} `structs:",omitempty"`
-	ScrollSnapAlign                interface{} `structs:",omitempty"`
-	ScrollSnapStop                 interface{} `structs:",omitempty"`
-	ScrollSnapType                 interface{} `structs:",omitempty"`
-	ShapeImageThreshold            interface{} `structs:",omitempty"`
-	ShapeMargin                    interface{} `structs:",omitempty"`
-	ShapeOutside                   interface{} `structs:",omitempty"`
-	ShapeRendering                 interface{} `structs:",omitempty"`
-	Size                           interface{} `structs:",omitempty"`
-	Speak                          interface{} `structs:",omitempty"`
-	Src                            interface{} `structs:",omitempty"`
-	StopColor                      interface{} `structs:",omitempty"`
-	StopOpacity                    interface{} `structs:",omitempty"`
-	Stroke                         interface{} `structs:",omitempty"`
-	StrokeDasharray                interface{} `structs:",omitempty"`
-	StrokeDashoffset               interface{} `structs:",omitempty"`
-	StrokeLinecap                  interface{} `structs:",omitempty"`
-	StrokeLinejoin                 interface{} `structs:",omitempty"`
-	StrokeMiterlimit               interface{} `structs:",omitempty"`
-	StrokeOpacity                  interface{} `structs:",omitempty"`
-	StrokeWidth                    interface{} `structs:",omitempty"`
-	TabSize                        interface{} `structs:",omitempty"`
-	TableLayout                    interface{} `structs:",omitempty"`
-	TextAlign                      interface{} `structs:",omitempty"`
-	TextAlignLast                  interface{} `structs:",omitempty"`
-	TextAnchor                     interface{} `structs:",omitempty"`
-	TextCombineUpright             interface{} `structs:",omitempty"`
-	TextDecoration                 interface{} `structs:",omitempty"`
-	TextDecorationColor            interface{} `structs:",omitempty"`
-	TextDecorationLine             interface{} `structs:",omitempty"`
-	TextDecorationSkipInk          interface{} `structs:",omitempty"`
-	TextDecorationStyle            interface{} `structs:",omitempty"`
-	TextIndent                     interface{} `structs:",omitempty"`
-	TextOrientation                interface{} `structs:",omitempty"`
-	TextOverflow                   interface{} `structs:",omitempty"`
-	TextRendering                  interface{} `structs:",omitempty"`
-	TextShadow                     interface{} `structs:",omitempty"`
-	TextSizeAdjust                 interface{} `structs:",omitempty"`
-	TextTransform                  interface{} `structs:",omitempty"`
-	TextUnderlinePosition          interface{} `structs:",omitempty"`
-	Top                            interface{} `structs:",omitempty"`
-	TouchAction                    interface{} `structs:",omitempty"`
-	Transform                      interface{} `structs:",omitempty"`
-	TransformBox                   interface{} `structs:",omitempty"`
-	TransformOrigin                interface{} `structs:",omitempty"`
-	TransformStyle                 interface{} `structs:",omitempty"`
-	Transition                     interface{} `structs:",omitempty"`
-	TransitionDelay                interface{} `structs:",omitempty"`
-	TransitionDuration             interface{} `structs:",omitempty"`
-	TransitionProperty             interface{} `structs:",omitempty"`
-	TransitionTimingFunction       interface{} `structs:",omitempty"`
-	UnicodeBidi                    interface{} `structs:",omitempty"`
-	UnicodeRange                   interface{} `structs:",omitempty"`
-	UserSelect                     interface{} `structs:",omitempty"`
-	UserZoom                       interface{} `structs:",omitempty"`
-	VectorEffect                   interface{} `structs:",omitempty"`
-	VerticalAlign                  interface{} `structs:",omitempty"`
-	Visibility                     interface{} `structs:",omitempty"`
-	WebkitAlignContent             interface{} `structs:",omitempty"`
-	WebkitAlignItems               interface{} `structs:",omitempty"`
-	WebkitAlignSelf                interface{} `structs:",omitempty"`
-	WebkitAnimation                interface{} `structs:",omitempty"`
-	WebkitAnimationDelay           interface{} `structs:",omitempty"`
-	WebkitAnimationDirection       interface{} `structs:",omitempty"`
-	WebkitAnimationDuration        interface{} `structs:",omitempty"`
-	WebkitAnimationFillMode        interface{} `structs:",omitempty"`
-	WebkitAnimationIterationCount  interface{} `structs:",omitempty"`
-	WebkitAnimationName            interface{} `structs:",omitempty"`
-	WebkitAnimationPlayState       interface{} `structs:",omitempty"`
-	WebkitAnimationTimingFunction  interface{} `structs:",omitempty"`
-	WebkitAppRegion                interface{} `structs:",omitempty"`
-	WebkitAppearance               interface{} `structs:",omitempty"`
-	WebkitBackfaceVisibility       interface{} `structs:",omitempty"`
-	WebkitBackgroundClip           interface{} `structs:",omitempty"`
-	WebkitBackgroundOrigin         interface{} `structs:",omitempty"`
-	WebkitBackgroundSize           interface{} `structs:",omitempty"`
-	WebkitBorderAfter              interface{} `structs:",omitempty"`
-	WebkitBorderAfterColor         interface{} `structs:",omitempty"`
-	WebkitBorderAfterStyle         interface{} `structs:",omitempty"`
-	WebkitBorderAfterWidth         interface{} `structs:",omitempty"`
-	WebkitBorderBefore             interface{} `structs:",omitempty"`
-	WebkitBorderBeforeColor        interface{} `structs:",omitempty"`
-	WebkitBorderBeforeStyle        interface{} `structs:",omitempty"`
-	WebkitBorderBeforeWidth        interface{} `structs:",omitempty"`
-	WebkitBorderBottomLeftRadius   interface{} `structs:",omitempty"`
-	WebkitBorderBottomRightRadius  interface{} `structs:",omitempty"`
-	WebkitBorderEnd                interface{} `structs:",omitempty"`
-	WebkitBorderEndColor           interface{} `structs:",omitempty"`
-	WebkitBorderEndStyle           interface{} `structs:",omitempty"`
-	WebkitBorderEndWidth           interface{} `structs:",omitempty"`
-	WebkitBorderHorizontalSpacing  interface{} `structs:",omitempty"`
-	WebkitBorderImage              interface{} `structs:",omitempty"`
-	WebkitBorderRadius             interface{} `structs:",omitempty"`
-	WebkitBorderStart              interface{} `structs:",omitempty"`
-	WebkitBorderStartColor         interface{} `structs:",omitempty"`
-	WebkitBorderStartStyle         interface{} `structs:",omitempty"`
-	WebkitBorderStartWidth         interface{} `structs:",omitempty"`
-	WebkitBorderTopLeftRadius      interface{} `structs:",omitempty"`
-	WebkitBorderTopRightRadius     interface{} `structs:",omitempty"`
-	WebkitBorderVerticalSpacing    interface{} `structs:",omitempty"`
-	WebkitBoxAlign                 interface{} `structs:",omitempty"`
-	WebkitBoxDecorationBreak       interface{} `structs:",omitempty"`
-	WebkitBoxDirection             interface{} `structs:",omitempty"`
-	WebkitBoxFlex                  interface{} `structs:",omitempty"`
-	WebkitBoxOrdinalGroup          interface{} `structs:",omitempty"`
-	WebkitBoxOrient                interface{} `structs:",omitempty"`
-	WebkitBoxPack                  interface{} `structs:",omitempty"`
-	WebkitBoxReflect               interface{} `structs:",omitempty"`
-	WebkitBoxShadow                interface{} `structs:",omitempty"`
-	WebkitBoxSizing                interface{} `structs:",omitempty"`
-	WebkitClipPath                 interface{} `structs:",omitempty"`
-	WebkitColumnBreakAfter         interface{} `structs:",omitempty"`
-	WebkitColumnBreakBefore        interface{} `structs:",omitempty"`
-	WebkitColumnBreakInside        interface{} `structs:",omitempty"`
-	WebkitColumnCount              interface{} `structs:",omitempty"`
-	WebkitColumnGap                interface{} `structs:",omitempty"`
-	WebkitColumnRule               interface{} `structs:",omitempty"`
-	WebkitColumnRuleColor          interface{} `structs:",omitempty"`
-	WebkitColumnRuleStyle          interface{} `structs:",omitempty"`
-	WebkitColumnRuleWidth          interface{} `structs:",omitempty"`
-	WebkitColumnSpan               interface{} `structs:",omitempty"`
-	WebkitColumnWidth              interface{} `structs:",omitempty"`
-	WebkitColumns                  interface{} `structs:",omitempty"`
-	WebkitFilter                   interface{} `structs:",omitempty"`
-	WebkitFlex                     interface{} `structs:",omitempty"`
-	WebkitFlexBasis                interface{} `structs:",omitempty"`
-	WebkitFlexDirection            interface{} `structs:",omitempty"`
-	WebkitFlexFlow                 interface{} `structs:",omitempty"`
-	WebkitFlexGrow                 interface{} `structs:",omitempty"`
-	WebkitFlexShrink               interface{} `structs:",omitempty"`
-	WebkitFlexWrap                 interface{} `structs:",omitempty"`
-	WebkitFontFeatureSettings      interface{} `structs:",omitempty"`
-	WebkitFontSizeDelta            interface{} `structs:",omitempty"`
-	WebkitFontSmoothing            interface{} `structs:",omitempty"`
-	WebkitHighlight                interface{} `structs:",omitempty"`
-	WebkitHyphenateCharacter       interface{} `structs:",omitempty"`
-	WebkitJustifyContent           interface{} `structs:",omitempty"`
-	WebkitLineBreak                interface{} `structs:",omitempty"`
-	WebkitLineClamp                interface{} `structs:",omitempty"`
-	WebkitLocale                   interface{} `structs:",omitempty"`
-	WebkitLogicalHeight            interface{} `structs:",omitempty"`
-	WebkitLogicalWidth             interface{} `structs:",omitempty"`
-	WebkitMarginAfter              interface{} `structs:",omitempty"`
-	WebkitMarginBefore             interface{} `structs:",omitempty"`
-	WebkitMarginEnd                interface{} `structs:",omitempty"`
-	WebkitMarginStart              interface{} `structs:",omitempty"`
-	WebkitMask                     interface{} `structs:",omitempty"`
-	WebkitMaskBoxImage             interface{} `structs:",omitempty"`
-	WebkitMaskBoxImageOutset       interface{} `structs:",omitempty"`
-	WebkitMaskBoxImageRepeat       interface{} `structs:",omitempty"`
-	WebkitMaskBoxImageSlice        interface{} `structs:",omitempty"`
-	WebkitMaskBoxImageSource       interface{} `structs:",omitempty"`
-	WebkitMaskBoxImageWidth        interface{} `structs:",omitempty"`
-	WebkitMaskClip                 interface{} `structs:",omitempty"`
-	WebkitMaskComposite            interface{} `structs:",omitempty"`
-	WebkitMaskImage                interface{} `structs:",omitempty"`
-	WebkitMaskOrigin               interface{} `structs:",omitempty"`
-	WebkitMaskPosition             interface{} `structs:",omitempty"`
-	WebkitMaskPositionX            interface{} `structs:",omitempty"`
-	WebkitMaskPositionY            interface{} `structs:",omitempty"`
-	WebkitMaskRepeat               interface{} `structs:",omitempty"`
-	WebkitMaskRepeatX              interface{} `structs:",omitempty"`
-	WebkitMaskRepeatY              interface{} `structs:",omitempty"`
-	WebkitMaskSize                 interface{} `structs:",omitempty"`
-	WebkitMaxLogicalHeight         interface{} `structs:",omitempty"`
-	WebkitMaxLogicalWidth          interface{} `structs:",omitempty"`
-	WebkitMinLogicalHeight         interface{} `structs:",omitempty"`
-	WebkitMinLogicalWidth          interface{} `structs:",omitempty"`
-	WebkitOpacity                  interface{} `structs:",omitempty"`
-	WebkitOrder                    interface{} `structs:",omitempty"`
-	WebkitPaddingAfter             interface{} `structs:",omitempty"`
-	WebkitPaddingBefore            interface{} `structs:",omitempty"`
-	WebkitPaddingEnd               interface{} `structs:",omitempty"`
-	WebkitPaddingStart             interface{} `structs:",omitempty"`
-	WebkitPerspective              interface{} `structs:",omitempty"`
-	WebkitPerspectiveOrigin        interface{} `structs:",omitempty"`
-	WebkitPerspectiveOriginX       interface{} `structs:",omitempty"`
-	WebkitPerspectiveOriginY       interface{} `structs:",omitempty"`
-	WebkitPrintColorAdjust         interface{} `structs:",omitempty"`
-	WebkitRtlOrdering              interface{} `structs:",omitempty"`
-	WebkitRubyPosition             interface{} `structs:",omitempty"`
-	WebkitShapeImageThreshold      interface{} `structs:",omitempty"`
-	WebkitShapeMargin              interface{} `structs:",omitempty"`
-	WebkitShapeOutside             interface{} `structs:",omitempty"`
-	WebkitTapHighlightColor        interface{} `structs:",omitempty"`
-	WebkitTextCombine              interface{} `structs:",omitempty"`
-	WebkitTextDecorationsInEffect  interface{} `structs:",omitempty"`
-	WebkitTextEmphasis             interface{} `structs:",omitempty"`
-	WebkitTextEmphasisColor        interface{} `structs:",omitempty"`
-	WebkitTextEmphasisPosition     interface{} `structs:",omitempty"`
-	WebkitTextEmphasisStyle        interface{} `structs:",omitempty"`
-	WebkitTextFillColor            interface{} `structs:",omitempty"`
-	WebkitTextOrientation          interface{} `structs:",omitempty"`
-	WebkitTextSecurity             interface{} `structs:",omitempty"`
-	WebkitTextSizeAdjust           interface{} `structs:",omitempty"`
-	WebkitTextStroke               interface{} `structs:",omitempty"`
-	WebkitTextStrokeColor          interface{} `structs:",omitempty"`
-	WebkitTextStrokeWidth          interface{} `structs:",omitempty"`
-	WebkitTransform                interface{} `structs:",omitempty"`
-	WebkitTransformOrigin          interface{} `structs:",omitempty"`
-	WebkitTransformOriginX         interface{} `structs:",omitempty"`
-	WebkitTransformOriginY         interface{} `structs:",omitempty"`
-	WebkitTransformOriginZ         interface{} `structs:",omitempty"`
-	WebkitTransformStyle           interface{} `structs:",omitempty"`
-	WebkitTransition               interface{} `structs:",omitempty"`
-	WebkitTransitionDelay          interface{} `structs:",omitempty"`
-	WebkitTransitionDuration       interface{} `structs:",omitempty"`
-	WebkitTransitionProperty       interface{} `structs:",omitempty"`
-	WebkitTransitionTimingFunction interface{} `structs:",omitempty"`
-	WebkitUserDrag                 interface{} `structs:",omitempty"`
-	WebkitUserModify               interface{} `structs:",omitempty"`
-	WebkitUserSelect               interface{} `structs:",omitempty"`
-	WebkitWritingMode              interface{} `structs:",omitempty"`
-	WhiteSpace                     interface{} `structs:",omitempty"`
-	Widows                         interface{} `structs:",omitempty"`
-	Width                          interface{} `structs:",omitempty"`
-	WillChange                     interface{} `structs:",omitempty"`
-	WordBreak                      interface{} `structs:",omitempty"`
-	WordSpacing                    interface{} `structs:",omitempty"`
-	WordWrap                       interface{} `structs:",omitempty"`
-	WritingMode                    interface{} `structs:",omitempty"`
-	X                              interface{} `structs:",omitempty"`
-	Y                              interface{} `structs:",omitempty"`
-	ZIndex                         interface{} `structs:",omitempty"`
-	Zoom                           interface{} `structs:",omitempty"`
+	AlignContent                   interface{}
+	AlignItems                     interface{}
+	AlignSelf                      interface{}
+	AlignmentBaseline              interface{}
+	All                            interface{}
+	Animation                      interface{}
+	AnimationDelay                 interface{}
+	AnimationDirection             interface{}
+	AnimationDuration              interface{}
+	AnimationFillMode              interface{}
+	AnimationIterationCount        interface{}
+	AnimationName                  interface{}
+	AnimationPlayState             interface{}
+	AnimationTimingFunction        interface{}
+	BackdropFilter                 interface{}
+	BackfaceVisibility             interface{}
+	Background                     interface{}
+	BackgroundAttachment           interface{}
+	BackgroundBlendMode            interface{}
+	BackgroundClip                 interface{}
+	BackgroundColor                interface{}
+	BackgroundImage                interface{}
+	BackgroundOrigin               interface{}
+	BackgroundPosition             interface{}
+	BackgroundPositionX            interface{}
+	BackgroundPositionY            interface{}
+	BackgroundRepeat               interface{}
+	BackgroundRepeatX              interface{}
+	BackgroundRepeatY              interface{}
+	BackgroundSize                 interface{}
+	BaselineShift                  interface{}
+	BlockSize                      interface{}
+	Border                         interface{}
+	BorderBlockEnd                 interface{}
+	BorderBlockEndColor            interface{}
+	BorderBlockEndStyle            interface{}
+	BorderBlockEndWidth            interface{}
+	BorderBlockStart               interface{}
+	BorderBlockStartColor          interface{}
+	BorderBlockStartStyle          interface{}
+	BorderBlockStartWidth          interface{}
+	BorderBottom                   interface{}
+	BorderBottomColor              interface{}
+	BorderBottomLeftRadius         interface{}
+	BorderBottomRightRadius        interface{}
+	BorderBottomStyle              interface{}
+	BorderBottomWidth              interface{}
+	BorderCollapse                 interface{}
+	BorderColor                    interface{}
+	BorderImage                    interface{}
+	BorderImageOutset              interface{}
+	BorderImageRepeat              interface{}
+	BorderImageSlice               interface{}
+	BorderImageSource              interface{}
+	BorderImageWidth               interface{}
+	BorderInlineEnd                interface{}
+	BorderInlineEndColor           interface{}
+	BorderInlineEndStyle           interface{}
+	BorderInlineEndWidth           interface{}
+	BorderInlineStart              interface{}
+	BorderInlineStartColor         interface{}
+	BorderInlineStartStyle         interface{}
+	BorderInlineStartWidth         interface{}
+	BorderLeft                     interface{}
+	BorderLeftColor                interface{}
+	BorderLeftStyle                interface{}
+	BorderRadius                   interface{}
+	BorderLeftWidth                interface{}
+	BorderRight                    interface{}
+	BorderRightColor               interface{}
+	BorderRightStyle               interface{}
+	BorderRightWidth               interface{}
+	BorderSpacing                  interface{}
+	BorderStyle                    interface{}
+	BorderTop                      interface{}
+	BorderTopColor                 interface{}
+	BorderTopLeftRadius            interface{}
+	BorderTopRightRadius           interface{}
+	BorderTopStyle                 interface{}
+	BorderTopWidth                 interface{}
+	BorderWidth                    interface{}
+	Bottom                         interface{}
+	BoxShadow                      interface{}
+	BoxSizing                      interface{}
+	BreakAfter                     interface{}
+	BreakBefore                    interface{}
+	BreakInside                    interface{}
+	BufferedRendering              interface{}
+	CaptionSide                    interface{}
+	CaretColor                     interface{}
+	Clear                          interface{}
+	Clip                           interface{}
+	ClipPath                       interface{}
+	ClipRule                       interface{}
+	Color                          interface{}
+	ColorInterpolation             interface{}
+	ColorInterpolationFilters      interface{}
+	ColorRendering                 interface{}
+	ColorScheme                    interface{}
+	ColumnCount                    interface{}
+	ColumnFill                     interface{}
+	ColumnGap                      interface{}
+	ColumnRule                     interface{}
+	ColumnRuleColor                interface{}
+	ColumnRuleStyle                interface{}
+	ColumnRuleWidth                interface{}
+	ColumnSpan                     interface{}
+	ColumnWidth                    interface{}
+	Columns                        interface{}
+	Contain                        interface{}
+	ContainIntrinsicSize           interface{}
+	Content                        interface{}
+	CounterIncrement               interface{}
+	CounterReset                   interface{}
+	Cursor                         interface{}
+	Cx                             interface{}
+	Cy                             interface{}
+	D                              interface{}
+	Direction                      interface{}
+	Display                        interface{}
+	DominantBaseline               interface{}
+	EmptyCells                     interface{}
+	Fill                           interface{}
+	FillOpacity                    interface{}
+	FillRule                       interface{}
+	Filter                         interface{}
+	Flex                           interface{}
+	FlexBasis                      interface{}
+	FlexDirection                  interface{}
+	FlexFlow                       interface{}
+	FlexGrow                       interface{}
+	FlexShrink                     interface{}
+	FlexWrap                       interface{}
+	Float                          interface{}
+	FloodColor                     interface{}
+	FloodOpacity                   interface{}
+	Font                           interface{}
+	FontDisplay                    interface{}
+	FontFamily                     interface{}
+	FontFeatureSettings            interface{}
+	FontKerning                    interface{}
+	FontOpticalSizing              interface{}
+	FontSize                       interface{}
+	FontStretch                    interface{}
+	FontStyle                      interface{}
+	FontVariant                    interface{}
+	FontVariantCaps                interface{}
+	FontVariantEastAsian           interface{}
+	FontVariantLigatures           interface{}
+	FontVariantNumeric             interface{}
+	FontVariationSettings          interface{}
+	FontWeight                     interface{}
+	Gap                            interface{}
+	Grid                           interface{}
+	GridArea                       interface{}
+	GridAutoColumns                interface{}
+	GridAutoFlow                   interface{}
+	GridAutoRows                   interface{}
+	GridColumn                     interface{}
+	GridColumnEnd                  interface{}
+	GridColumnGap                  interface{}
+	GridColumnStart                interface{}
+	GridGap                        interface{}
+	GridRow                        interface{}
+	GridRowEnd                     interface{}
+	GridRowGap                     interface{}
+	GridRowStart                   interface{}
+	GridTemplate                   interface{}
+	GridTemplateAreas              interface{}
+	GridTemplateColumns            interface{}
+	GridTemplateRows               interface{}
+	Height                         interface{}
+	Hyphens                        interface{}
+	ImageOrientation               interface{}
+	ImageRendering                 interface{}
+	InlineSize                     interface{}
+	Isolation                      interface{}
+	JustifyContent                 interface{}
+	JustifyItems                   interface{}
+	JustifySelf                    interface{}
+	Left                           interface{}
+	LetterSpacing                  interface{}
+	LightingColor                  interface{}
+	LineBreak                      interface{}
+	LineHeight                     interface{}
+	ListStyle                      interface{}
+	ListStyleImage                 interface{}
+	ListStylePosition              interface{}
+	ListStyleType                  interface{}
+	Margin                         interface{}
+	MarginBlockEnd                 interface{}
+	MarginBlockStart               interface{}
+	MarginBottom                   interface{}
+	MarginInlineEnd                interface{}
+	MarginInlineStart              interface{}
+	MarginLeft                     interface{}
+	MarginRight                    interface{}
+	MarginTop                      interface{}
+	Marker                         interface{}
+	MarkerEnd                      interface{}
+	MarkerMid                      interface{}
+	MarkerStart                    interface{}
+	Mask                           interface{}
+	MaskType                       interface{}
+	MaxBlockSize                   interface{}
+	MaxHeight                      interface{}
+	MaxInlineSize                  interface{}
+	MaxWidth                       interface{}
+	MaxZoom                        interface{}
+	MinBlockSize                   interface{}
+	MinHeight                      interface{}
+	MinInlineSize                  interface{}
+	MinWidth                       interface{}
+	MinZoom                        interface{}
+	MixBlendMode                   interface{}
+	ObjectFit                      interface{}
+	ObjectPosition                 interface{}
+	Offset                         interface{}
+	OffsetDistance                 interface{}
+	OffsetPath                     interface{}
+	OffsetRotate                   interface{}
+	Opacity                        interface{}
+	Order                          interface{}
+	Orientation                    interface{}
+	Orphans                        interface{}
+	Outline                        interface{}
+	OutlineColor                   interface{}
+	OutlineOffset                  interface{}
+	OutlineStyle                   interface{}
+	OutlineWidth                   interface{}
+	Overflow                       interface{}
+	OverflowAnchor                 interface{}
+	OverflowWrap                   interface{}
+	OverflowX                      interface{}
+	OverflowY                      interface{}
+	OverscrollBehavior             interface{}
+	OverscrollBehaviorBlock        interface{}
+	OverscrollBehaviorInline       interface{}
+	OverscrollBehaviorX            interface{}
+	OverscrollBehaviorY            interface{}
+	Padding                        interface{}
+	PaddingBlockEnd                interface{}
+	PaddingBlockStart              interface{}
+	PaddingBottom                  interface{}
+	PaddingInlineEnd               interface{}
+	PaddingInlineStart             interface{}
+	PaddingLeft                    interface{}
+	PaddingRight                   interface{}
+	PaddingTop                     interface{}
+	PageBreakAfter                 interface{}
+	PageBreakBefore                interface{}
+	PageBreakInside                interface{}
+	PaintOrder                     interface{}
+	Perspective                    interface{}
+	PerspectiveOrigin              interface{}
+	PlaceContent                   interface{}
+	PlaceItems                     interface{}
+	PlaceSelf                      interface{}
+	PointerEvents                  interface{}
+	Position                       interface{}
+	Quotes                         interface{}
+	R                              interface{}
+	Resize                         interface{}
+	Right                          interface{}
+	RowGap                         interface{}
+	Rx                             interface{}
+	Ry                             interface{}
+	ScrollBehavior                 interface{}
+	ScrollMargin                   interface{}
+	ScrollMarginBlock              interface{}
+	ScrollMarginBlockEnd           interface{}
+	ScrollMarginBlockStart         interface{}
+	ScrollMarginBottom             interface{}
+	ScrollMarginInline             interface{}
+	ScrollMarginInlineEnd          interface{}
+	ScrollMarginInlineStart        interface{}
+	ScrollMarginLeft               interface{}
+	ScrollMarginRight              interface{}
+	ScrollMarginTop                interface{}
+	ScrollPadding                  interface{}
+	ScrollPaddingBlock             interface{}
+	ScrollPaddingBlockEnd          interface{}
+	ScrollPaddingBlockStart        interface{}
+	ScrollPaddingBottom            interface{}
+	ScrollPaddingInline            interface{}
+	ScrollPaddingInlineEnd         interface{}
+	ScrollPaddingInlineStart       interface{}
+	ScrollPaddingLeft              interface{}
+	ScrollPaddingRight             interface{}
+	ScrollPaddingTop               interface{}
+	ScrollSnapAlign                interface{}
+	ScrollSnapStop                 interface{}
+	ScrollSnapType                 interface{}
+	ShapeImageThreshold            interface{}
+	ShapeMargin                    interface{}
+	ShapeOutside                   interface{}
+	ShapeRendering                 interface{}
+	Size                           interface{}
+	Speak                          interface{}
+	Src                            interface{}
+	StopColor                      interface{}
+	StopOpacity                    interface{}
+	Stroke                         interface{}
+	StrokeDasharray                interface{}
+	StrokeDashoffset               interface{}
+	StrokeLinecap                  interface{}
+	StrokeLinejoin                 interface{}
+	StrokeMiterlimit               interface{}
+	StrokeOpacity                  interface{}
+	StrokeWidth                    interface{}
+	TabSize                        interface{}
+	TableLayout                    interface{}
+	TextAlign                      interface{}
+	TextAlignLast                  interface{}
+	TextAnchor                     interface{}
+	TextCombineUpright             interface{}
+	TextDecoration                 interface{}
+	TextDecorationColor            interface{}
+	TextDecorationLine             interface{}
+	TextDecorationSkipInk          interface{}
+	TextDecorationStyle            interface{}
+	TextIndent                     interface{}
+	TextOrientation                interface{}
+	TextOverflow                   interface{}
+	TextRendering                  interface{}
+	TextShadow                     interface{}
+	TextSizeAdjust                 interface{}
+	TextTransform                  interface{}
+	TextUnderlinePosition          interface{}
+	Top                            interface{}
+	TouchAction                    interface{}
+	Transform                      interface{}
+	TransformBox                   interface{}
+	TransformOrigin                interface{}
+	TransformStyle                 interface{}
+	Transition                     interface{}
+	TransitionDelay                interface{}
+	TransitionDuration             interface{}
+	TransitionProperty             interface{}
+	TransitionTimingFunction       interface{}
+	UnicodeBidi                    interface{}
+	UnicodeRange                   interface{}
+	UserSelect                     interface{}
+	UserZoom                       interface{}
+	VectorEffect                   interface{}
+	VerticalAlign                  interface{}
+	Visibility                     interface{}
+	WebkitAlignContent             interface{}
+	WebkitAlignItems               interface{}
+	WebkitAlignSelf                interface{}
+	WebkitAnimation                interface{}
+	WebkitAnimationDelay           interface{}
+	WebkitAnimationDirection       interface{}
+	WebkitAnimationDuration        interface{}
+	WebkitAnimationFillMode        interface{}
+	WebkitAnimationIterationCount  interface{}
+	WebkitAnimationName            interface{}
+	WebkitAnimationPlayState       interface{}
+	WebkitAnimationTimingFunction  interface{}
+	WebkitAppRegion                interface{}
+	WebkitAppearance               interface{}
+	WebkitBackfaceVisibility       interface{}
+	WebkitBackgroundClip           interface{}
+	WebkitBackgroundOrigin         interface{}
+	WebkitBackgroundSize           interface{}
+	WebkitBorderAfter              interface{}
+	WebkitBorderAfterColor         interface{}
+	WebkitBorderAfterStyle         interface{}
+	WebkitBorderAfterWidth         interface{}
+	WebkitBorderBefore             interface{}
+	WebkitBorderBeforeColor        interface{}
+	WebkitBorderBeforeStyle        interface{}
+	WebkitBorderBeforeWidth        interface{}
+	WebkitBorderBottomLeftRadius   interface{}
+	WebkitBorderBottomRightRadius  interface{}
+	WebkitBorderEnd                interface{}
+	WebkitBorderEndColor           interface{}
+	WebkitBorderEndStyle           interface{}
+	WebkitBorderEndWidth           interface{}
+	WebkitBorderHorizontalSpacing  interface{}
+	WebkitBorderImage              interface{}
+	WebkitBorderRadius             interface{}
+	WebkitBorderStart              interface{}
+	WebkitBorderStartColor         interface{}
+	WebkitBorderStartStyle         interface{}
+	WebkitBorderStartWidth         interface{}
+	WebkitBorderTopLeftRadius      interface{}
+	WebkitBorderTopRightRadius     interface{}
+	WebkitBorderVerticalSpacing    interface{}
+	WebkitBoxAlign                 interface{}
+	WebkitBoxDecorationBreak       interface{}
+	WebkitBoxDirection             interface{}
+	WebkitBoxFlex                  interface{}
+	WebkitBoxOrdinalGroup          interface{}
+	WebkitBoxOrient                interface{}
+	WebkitBoxPack                  interface{}
+	WebkitBoxReflect               interface{}
+	WebkitBoxShadow                interface{}
+	WebkitBoxSizing                interface{}
+	WebkitClipPath                 interface{}
+	WebkitColumnBreakAfter         interface{}
+	WebkitColumnBreakBefore        interface{}
+	WebkitColumnBreakInside        interface{}
+	WebkitColumnCount              interface{}
+	WebkitColumnGap                interface{}
+	WebkitColumnRule               interface{}
+	WebkitColumnRuleColor          interface{}
+	WebkitColumnRuleStyle          interface{}
+	WebkitColumnRuleWidth          interface{}
+	WebkitColumnSpan               interface{}
+	WebkitColumnWidth              interface{}
+	WebkitColumns                  interface{}
+	WebkitFilter                   interface{}
+	WebkitFlex                     interface{}
+	WebkitFlexBasis                interface{}
+	WebkitFlexDirection            interface{}
+	WebkitFlexFlow                 interface{}
+	WebkitFlexGrow                 interface{}
+	WebkitFlexShrink               interface{}
+	WebkitFlexWrap                 interface{}
+	WebkitFontFeatureSettings      interface{}
+	WebkitFontSizeDelta            interface{}
+	WebkitFontSmoothing            interface{}
+	WebkitHighlight                interface{}
+	WebkitHyphenateCharacter       interface{}
+	WebkitJustifyContent           interface{}
+	WebkitLineBreak                interface{}
+	WebkitLineClamp                interface{}
+	WebkitLocale                   interface{}
+	WebkitLogicalHeight            interface{}
+	WebkitLogicalWidth             interface{}
+	WebkitMarginAfter              interface{}
+	WebkitMarginBefore             interface{}
+	WebkitMarginEnd                interface{}
+	WebkitMarginStart              interface{}
+	WebkitMask                     interface{}
+	WebkitMaskBoxImage             interface{}
+	WebkitMaskBoxImageOutset       interface{}
+	WebkitMaskBoxImageRepeat       interface{}
+	WebkitMaskBoxImageSlice        interface{}
+	WebkitMaskBoxImageSource       interface{}
+	WebkitMaskBoxImageWidth        interface{}
+	WebkitMaskClip                 interface{}
+	WebkitMaskComposite            interface{}
+	WebkitMaskImage                interface{}
+	WebkitMaskOrigin               interface{}
+	WebkitMaskPosition             interface{}
+	WebkitMaskPositionX            interface{}
+	WebkitMaskPositionY            interface{}
+	WebkitMaskRepeat               interface{}
+	WebkitMaskRepeatX              interface{}
+	WebkitMaskRepeatY              interface{}
+	WebkitMaskSize                 interface{}
+	WebkitMaxLogicalHeight         interface{}
+	WebkitMaxLogicalWidth          interface{}
+	WebkitMinLogicalHeight         interface{}
+	WebkitMinLogicalWidth          interface{}
+	WebkitOpacity                  interface{}
+	WebkitOrder                    interface{}
+	WebkitPaddingAfter             interface{}
+	WebkitPaddingBefore            interface{}
+	WebkitPaddingEnd               interface{}
+	WebkitPaddingStart             interface{}
+	WebkitPerspective              interface{}
+	WebkitPerspectiveOrigin        interface{}
+	WebkitPerspectiveOriginX       interface{}
+	WebkitPerspectiveOriginY       interface{}
+	WebkitPrintColorAdjust         interface{}
+	WebkitRtlOrdering              interface{}
+	WebkitRubyPosition             interface{}
+	WebkitShapeImageThreshold      interface{}
+	WebkitShapeMargin              interface{}
+	WebkitShapeOutside             interface{}
+	WebkitTapHighlightColor        interface{}
+	WebkitTextCombine              interface{}
+	WebkitTextDecorationsInEffect  interface{}
+	WebkitTextEmphasis             interface{}
+	WebkitTextEmphasisColor        interface{}
+	WebkitTextEmphasisPosition     interface{}
+	WebkitTextEmphasisStyle        interface{}
+	WebkitTextFillColor            interface{}
+	WebkitTextOrientation          interface{}
+	WebkitTextSecurity             interface{}
+	WebkitTextSizeAdjust           interface{}
+	WebkitTextStroke               interface{}
+	WebkitTextStrokeColor          interface{}
+	WebkitTextStrokeWidth          interface{}
+	WebkitTransform                interface{}
+	WebkitTransformOrigin          interface{}
+	WebkitTransformOriginX         interface{}
+	WebkitTransformOriginY         interface{}
+	WebkitTransformOriginZ         interface{}
+	WebkitTransformStyle           interface{}
+	WebkitTransition               interface{}
+	WebkitTransitionDelay          interface{}
+	WebkitTransitionDuration       interface{}
+	WebkitTransitionProperty       interface{}
+	WebkitTransitionTimingFunction interface{}
+	WebkitUserDrag                 interface{}
+	WebkitUserModify               interface{}
+	WebkitUserSelect               interface{}
+	WebkitWritingMode              interface{}
+	WhiteSpace                     interface{}
+	Widows                         interface{}
+	Width                          interface{}
+	WillChange                     interface{}
+	WordBreak                      interface{}
+	WordSpacing                    interface{}
+	WordWrap                       interface{}
+	WritingMode                    interface{}
+	X                              interface{}
+	Y                              interface{}
+	ZIndex                         interface{}
+	Zoom                           interface{}
 }
 
 func (s *Style) String() string {
-	if s == nil {
-		return ""
-	}
-
-	values := structs.Map(s)
+	values := toMap(s)
 	var attrs []string
 
 	for key, value := range values {
