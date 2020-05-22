@@ -10,19 +10,19 @@ import (
 func List(num int) *Element {
 	var items []interface{}
 	for i := 0; i < num; i++ {
-		items = append(items, CreateElement("li", Props{
-			"className": "list__item item-" + strconv.Itoa(i+1),
+		items = append(items, CreateElement("li", &Props{
+			ClassName: "list__item item-" + strconv.Itoa(i+1),
 		}, fmt.Sprintf("Item %d", i+1)))
 	}
 
-	return CreateElement("ul", Props{
-		"className": "list__root",
+	return CreateElement("ul", &Props{
+		ClassName: "list__root",
 	}, items...)
 }
 
 func App() *Element {
-	return CreateElement("div", Props{
-		"className": "root",
+	return CreateElement("div", &Props{
+		ClassName: "root",
 	}, List(4))
 }
 
@@ -35,8 +35,8 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should render a simple div", func(t *testing.T) {
-		div, err := Render(CreateElement("div", Props{
-			"className": "ui__container",
+		div, err := Render(CreateElement("div", &Props{
+			ClassName: "ui__container",
 		}))
 
 		assert.NoError(t, err)
@@ -51,8 +51,8 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should render attrs correctly", func(t *testing.T) {
-		div, err := Render(CreateElement("div", Props{
-			"data": `{"json": "true"}`,
+		div, err := Render(CreateElement("div", &Props{
+			Data: `{"json": "true"}`,
 		}))
 
 		assert.NoError(t, err)
@@ -60,8 +60,8 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should render children correctly", func(t *testing.T) {
-		div, err := Render(CreateElement("div", Props{
-			"data": `{"json": "true"}`,
+		div, err := Render(CreateElement("div", &Props{
+			Data: `{"json": "true"}`,
 		}, "Text <script>function () { alert('broken'); }</script>"))
 
 		assert.NoError(t, err)
@@ -69,8 +69,8 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should correctly run a void element", func(t *testing.T) {
-		div, err := Render(CreateElement("img", Props{
-			"src": `url`,
+		div, err := Render(CreateElement("img", &Props{
+			Src: `url`,
 		}, "Children elements text"))
 
 		assert.NoError(t, err)
@@ -80,8 +80,8 @@ func TestRender(t *testing.T) {
 
 func BenchmarkSimpleElement(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		_, _ = Render(CreateElement("div", Props{
-			"className": "ui__container",
+		_, _ = Render(CreateElement("div", &Props{
+			ClassName: "ui__container",
 		}))
 	}
 }

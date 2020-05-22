@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/spf13/cast"
 	"html/template"
-	"strings"
 	"sync"
 )
 
@@ -20,18 +19,8 @@ func isVoidElement(element string) bool {
 	return false
 }
 
-func genHtml(tag string, attrs Props, childs []string) string {
-	attrsStr := ""
-
-	for key, value := range attrs {
-		if key == "className" {
-			key = "class"
-		}
-
-		attrsStr += key + "=\"" + template.HTMLEscapeString(cast.ToString(value)) + "\" "
-	}
-
-	attrsStr = strings.TrimSpace(attrsStr)
+func genHtml(tag string, attrs *Props, childs []string) string {
+	attrsStr := attrs.String()
 	content := "<" + tag
 
 	if attrsStr != "" {

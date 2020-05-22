@@ -18,19 +18,19 @@ import (
 func List(num int) *react.Element {
     var items []interface{}
     for i := 0; i < num; i++ {
-        items = append(items, react.CreateElement("li", react.Props{
-            "className": fmt.Sprintf("list__item item-%d", i+1),
+        items = append(items, react.CreateElement("li", &react.Props{
+            ClassName: fmt.Sprintf("list__item item-%d", i+1),
         }, fmt.Sprintf("Item %d", i+1)))
     }
 
-    return react.CreateElement("ul", react.Props{
-        "className": "list__root",
+    return react.CreateElement("ul", &react.Props{
+        ClassName: "list__root",
     }, items...)
 }
 
 func App() *react.Element {
-    return react.CreateElement("div", react.Props{
-        "className": "root",
+    return react.CreateElement("div", &react.Props{
+        ClassName: "root",
     }, List(4))
 }
 
