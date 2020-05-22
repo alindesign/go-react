@@ -47,14 +47,10 @@ func main () {
 ```
 
 ### Background
-After a long night of no sleep and thinking on a better way to reuse HTML on golang, I started 
-to search for something that has the possibility to create reusable components like on go lang, but without any success and tons 
-of Javascript & React hours, I was thinking to adopt React component definition style, and implemented it in the way I was thinking
-they have done it.
+After a long night of no sleep and thinking on a better way to reuse HTML on golang, I started to search for something that has the possibility to create reusable components like on go lang, but without any success and tons of Javascript & React hours, I was thinking to adopt React component definition style, and implemented it in the way I was thinking they have done it.
 
 ### Contributing
-If you have ideas or improvements you can contribute to this library
+If you have ideas or improvements you can contribute to this library.
 
 ### Disclaimer
-I have done the project pure for fun and experimenting new things, I don't think that my implementation it's the best, so if you think that something 
-can be improved, submit your PR.
+I have done the project pure for fun and experimenting new things, I don't think that my implementation it's the best, so if you think that something can be improved, submit your PR.
