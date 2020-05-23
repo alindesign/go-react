@@ -2,7 +2,6 @@ package react
 
 import (
 	"errors"
-	"github.com/spf13/cast"
 	"html/template"
 	"sync"
 )
@@ -20,33 +19,48 @@ func isVoidElement(element string) bool {
 }
 
 func genHtml(tag string, attrs *Props, childs []string) string {
-	attrsStr := attrs.String()
-	content := "<" + tag
+	attrsStr := ""
+	content := ""
+	hasTag := tag != ""
+	isVoid := isVoidElement(tag)
 
-	if attrsStr != "" {
-		content += " " + attrsStr
+	if hasTag {
+		attrsStr = attrs.String()
+		if attrsStr != "" {
+			attrsStr = " " + attrsStr
+		}
 	}
 
-	if isVoidElement(tag) {
-		return content + " />"
+	if hasTag && isVoid {
+		return "<" + tag + attrsStr + " />"
 	}
 
-	content += ">"
 	for _, child := range childs {
 		content += child
 	}
 
-	return content + "</" + tag + ">"
+	if hasTag {
+		content = "<" + tag + attrsStr + ">" + content + "</" + tag + ">"
+	}
+
+	return content
 }
 
 func render(component *Element, ctx *Context) (string, error) {
-	if component.Tag == "" {
+	if component.Tag == "" && !component.Fragment {
 		return "", errors.New("component has an empty tag")
 	}
 
 	chunksLen := len(component.Childs)
 	var chunks []string
 	var err error
+
+	for _, value := range component.Childs {
+		err = CheckElement(value)
+		if err != nil {
+			return "", err
+		}
+	}
 
 	if component.Childs != nil && chunksLen > 0 {
 		chunks = make([]string, chunksLen)
@@ -60,25 +74,11 @@ func render(component *Element, ctx *Context) (string, error) {
 				var errChunk error
 
 				switch c.(type) {
-				case *Element:
-					chunk, errChunk = render(c.(*Element), ctx)
-					break
-
 				case ComponentClass:
 					result := c.(ComponentClass).Render(ctx)
-					switch result.(type) {
-					case *Element:
-						chunk, errChunk = render(result.(*Element), ctx)
-						break
-					default:
-						chunk = template.HTMLEscapeString(cast.ToString(result))
-						break
-					}
-
-					break
-
+					chunk, errChunk = renderElement(result, ctx)
 				default:
-					chunk = template.HTMLEscapeString(cast.ToString(c))
+					chunk, errChunk = renderElement(c, ctx)
 				}
 
 				if errChunk != nil {
@@ -103,13 +103,35 @@ func render(component *Element, ctx *Context) (string, error) {
 	return genHtml(component.Tag, component.Props, chunks), nil
 }
 
+func renderElement(element interface{}, ctx *Context) (string, error) {
+	switch el := element.(type) {
+	case *Element:
+		return render(el, ctx)
+	case template.HTML:
+		return string(el), nil
+	case template.CSS:
+		return string(el), nil
+	case template.JS:
+		return string(el), nil
+	case string:
+		return template.HTMLEscapeString(el), nil
+	}
+
+	return "", nil
+}
+
 func Render(component *Element, data ...map[string]interface{}) (string, error) {
+	var err error
+	var content string
+
 	ctx := NewContext()
 	if len(data) > 0 {
 		ctx.SetData(data[0])
 	}
 
-	return render(component, ctx)
+	content, err = render(component, ctx)
+
+	return content, err
 }
 
 func RenderBytes(component *Element, data ...map[string]interface{}) ([]byte, error) {

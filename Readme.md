@@ -7,6 +7,8 @@ $ go get -u github.com/alindesign/go-react
 ```
 
 ### Usage
+
+#### Default example
 ```go
 package main
 
@@ -44,6 +46,18 @@ func main () {
 }
 
 // Output: <div class="root"><ul class="list__root"><li class="list__item item-1">Item 1</li><li class="list__item item-2">Item 2</li><li class="list__item item-3">Item 3</li><li class="list__item item-4">Item 4</li></ul></div>
+```
+#### Elements
+```go
+element := react.H1(nil, "child 2")
+div := react.Div(nil, "child 1", element)
+```
+#### Fragments
+```go
+fragment := react.Fragment(
+    H1(nil, "Title"),
+    H3(nil, "text"),
+)
 ```
 
 ### Background

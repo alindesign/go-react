@@ -3,6 +3,7 @@ package react
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"html/template"
 	"strconv"
 	"testing"
 )
@@ -76,35 +77,68 @@ func TestRender(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, `<img src="url" />`, div)
 	})
-}
 
-func BenchmarkSimpleElement(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		_, _ = Render(CreateElement("div", &Props{
-			ClassName: "ui__container",
-		}))
-	}
-}
+	t.Run("it should test on non valid element", func(t *testing.T) {
+		content, err := Render(CreateElement("span", nil, 1024))
 
-func BenchmarkSmallElement(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		_, _ = Render(App())
-	}
-}
+		assert.Error(t, err)
+		assert.Equal(t, "", content)
+	})
 
-func BenchmarkTreeElement(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		_, _ = Render(CreateElement("div", nil, List(4),
-			CreateElement("div", nil, List(4),
-				CreateElement("div", nil, List(4)),
-				CreateElement("div", nil, List(4)),
-				CreateElement("div", nil, List(4),
-					CreateElement("div", nil, List(4),
-						CreateElement("div", nil, List(4)),
-					),
-					CreateElement("div", nil, List(4)),
-				),
-			),
+	t.Run("it should render fragment correctly", func(t *testing.T) {
+		content, err := Render(CreateFragment(
+			CreateElement("span", nil, "Item1"),
+			CreateElement("span", nil, "Item2"),
 		))
-	}
+
+		assert.NoError(t, err)
+		assert.Equal(t, "<span>Item1</span><span>Item2</span>", content)
+	})
+}
+
+func TestRenderElement(t *testing.T) {
+	t.Run("it should render pure html correctly", func(t *testing.T) {
+		value := `<h1>Hello World!</h1>`
+		str, err := renderElement(template.HTML(value), nil)
+
+		assert.NoError(t, err)
+		assert.Equal(t, value, str)
+	})
+
+	t.Run("it should render pure css correctly", func(t *testing.T) {
+		value := `body {
+	color: #fff;
+	background: url(/path/to/image.png);
+	font-size: 14px;
+	font-family: 'Roboto', sans-serif;
+}`
+		str, err := renderElement(template.CSS(value), nil)
+
+		assert.NoError(t, err)
+		assert.Equal(t, value, str)
+	})
+
+	t.Run("it should render pure js correctly", func(t *testing.T) {
+		value := `function a (b, c) { return b + c; }`
+		str, err := renderElement(template.JS(value), nil)
+
+		assert.NoError(t, err)
+		assert.Equal(t, value, str)
+	})
+
+	t.Run("it should render pure string correctly", func(t *testing.T) {
+		value := `Sample text`
+		str, err := renderElement(value, nil)
+
+		assert.NoError(t, err)
+		assert.Equal(t, value, str)
+	})
+
+	t.Run("it should render combined html + string correctly", func(t *testing.T) {
+		value := `Sample text <script type="text/javascript">alert("Hi!");</script>`
+		str, err := renderElement(value, nil)
+
+		assert.NoError(t, err)
+		assert.Equal(t, `Sample text &lt;script type=&#34;text/javascript&#34;&gt;alert(&#34;Hi!&#34;);&lt;/script&gt;`, str)
+	})
 }
