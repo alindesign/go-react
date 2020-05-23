@@ -285,10 +285,6 @@ func Menuitem(props *Props, children ...interface{}) *Element {
 	return CreateElement("menuitem", props, children...)
 }
 
-func Meta(props *Props, children ...interface{}) *Element {
-	return CreateElement("meta", props, children...)
-}
-
 func Meter(props *Props, children ...interface{}) *Element {
 	return CreateElement("meter", props, children...)
 }

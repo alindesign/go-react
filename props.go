@@ -112,6 +112,7 @@ type Props struct {
 	Data            interface{}
 
 	CustomProps interface{}
+	Property    interface{}
 }
 
 func (p *Props) String() string {
