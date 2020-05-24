@@ -235,15 +235,25 @@ func Iframe(props *Props, children ...interface{}) *Element {
 	return CreateElement("iframe", props, children...)
 }
 
-func Img(src string, alt string, props ...*Props) *Element {
+func Img(source interface{}, alt string, props ...*Props) *Element {
 	p := &Props{}
 
 	if len(props) > 0 && props[0] != nil {
 		p = props[0]
 	}
 
-	p.Src = src
 	p.Alt = alt
+
+	if source != nil && source != "" {
+		switch src := source.(type) {
+		case string:
+			p.Src = src
+			break
+		case template.URL:
+			p.Src = string(src)
+			break
+		}
+	}
 
 	return CreateElement("img", p)
 }
@@ -276,7 +286,7 @@ func Li(props *Props, children ...interface{}) *Element {
 	return CreateElement("li", props, children...)
 }
 
-func Link(rel string, href string, props *Props) *Element {
+func Link(rel string, href interface{}, props *Props) *Element {
 	p := &Props{}
 
 	if props != nil {
@@ -287,8 +297,15 @@ func Link(rel string, href string, props *Props) *Element {
 		p.Rel = rel
 	}
 
-	if href != "" {
-		p.Href = href
+	if href != nil && href != "" {
+		switch src := href.(type) {
+		case string:
+			p.Href = src
+			break
+		case template.URL:
+			p.Href = string(src)
+			break
+		}
 	}
 
 	return CreateElement("link", props)
