@@ -68,3 +68,6 @@ If you have ideas or improvements you can contribute to this library.
 
 ### Disclaimer
 I have done the project pure for fun and experimenting new things, I don't think that my implementation it's the best, so if you think that something can be improved, submit your PR.
+
+### TODO
+- Clean up
