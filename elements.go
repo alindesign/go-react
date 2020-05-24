@@ -308,7 +308,7 @@ func Link(rel string, href interface{}, props *Props) *Element {
 		}
 	}
 
-	return CreateElement("link", props)
+	return CreateElement("link", p)
 }
 
 func Main(props *Props, children ...interface{}) *Element {
