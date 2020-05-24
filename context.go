@@ -13,22 +13,38 @@ func (c *Context) Has(key string) bool {
 	return ok
 }
 
-func (c *Context) Get(key string, defaultValue interface{}) interface{} {
+func (c *Context) Get(key string, defaultValue ...interface{}) interface{} {
 	value, ok := c.data[key]
 
 	if ok {
 		return value
 	}
 
-	return defaultValue
+	if len(defaultValue) > 0 {
+		return defaultValue[0]
+	}
+
+	return nil
 }
 
-func (c *Context) GetString(key string, defaultValue string) string {
-	return c.Get(key, defaultValue).(string)
+func (c *Context) GetString(key string, defaultValue ...string) string {
+	defVal := ""
+
+	if len(defaultValue) > 0 {
+		defVal = defaultValue[0]
+	}
+
+	return c.Get(key, defVal).(string)
 }
 
-func (c *Context) GetBool(key string, defaultValue bool) bool {
-	return c.Get(key, defaultValue).(bool)
+func (c *Context) GetBool(key string, defaultValue ...bool) bool {
+	defVal := false
+
+	if len(defaultValue) > 0 {
+		defVal = defaultValue[0]
+	}
+
+	return c.Get(key, defVal).(bool)
 }
 
 func (c *Context) Set(key string, data map[string]interface{}) *Context {

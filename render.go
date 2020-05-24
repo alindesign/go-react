@@ -74,8 +74,8 @@ func render(component *Element, ctx *Context) (string, error) {
 				var errChunk error
 
 				switch c.(type) {
-				case ComponentClass:
-					result := c.(ComponentClass).Render(ctx)
+				case ComponentStruct:
+					result := c.(ComponentStruct).Render(ctx)
 					chunk, errChunk = renderElement(result, ctx)
 				default:
 					chunk, errChunk = renderElement(c, ctx)
