@@ -47,6 +47,10 @@ func genHtml(tag string, attrs *Props, childs []string) string {
 }
 
 func render(component *Element, ctx *Context) (string, error) {
+	if component == nil {
+		return "", nil
+	}
+
 	if component.Tag == "" && !component.Fragment {
 		return "", errors.New("component has an empty tag")
 	}
@@ -73,12 +77,12 @@ func render(component *Element, ctx *Context) (string, error) {
 				var chunk string
 				var errChunk error
 
-				switch c.(type) {
-				case ComponentStruct:
-					result := c.(ComponentStruct).Render(ctx)
-					chunk, errChunk = renderElement(result, ctx)
-				default:
-					chunk, errChunk = renderElement(c, ctx)
+				if c != nil {
+					if IsComponent(c) {
+						chunk, errChunk = renderElement(renderComponent(c, ctx), ctx)
+					} else {
+						chunk, errChunk = renderElement(c, ctx)
+					}
 				}
 
 				if errChunk != nil {

@@ -1,7 +1,15 @@
 package react
 
 func IsFragment(value interface{}) bool {
+	if value == nil {
+		return false
+	}
 	v, ok := value.(*Element)
+
+	if v == nil {
+		return false
+	}
+
 	return ok && v.Fragment
 }
 
