@@ -261,8 +261,22 @@ func Li(props *Props, children ...interface{}) *Element {
 	return CreateElement("li", props, children...)
 }
 
-func Link(props *Props, children ...interface{}) *Element {
-	return CreateElement("link", props, children...)
+func Link(rel string, href string, props *Props) *Element {
+	p := &Props{}
+
+	if props != nil {
+		p = props
+	}
+
+	if rel != "" {
+		p.Rel = rel
+	}
+
+	if href != "" {
+		p.Href = href
+	}
+
+	return CreateElement("link", props)
 }
 
 func Main(props *Props, children ...interface{}) *Element {
