@@ -81,8 +81,8 @@ func Body(props *Props, children ...interface{}) *Element {
 	return CreateElement("body", props, children...)
 }
 
-func Br(props *Props, children ...interface{}) *Element {
-	return CreateElement("br", props, children...)
+func Br() *Element {
+	return CreateElement("br", nil)
 }
 
 func Button(props *Props, children ...interface{}) *Element {
@@ -213,8 +213,14 @@ func Hgroup(props *Props, children ...interface{}) *Element {
 	return CreateElement("hgroup", props, children...)
 }
 
-func Hr(props *Props, children ...interface{}) *Element {
-	return CreateElement("hr", props, children...)
+func Hr(props ...*Props) *Element {
+	var p *Props
+
+	if len(props) > 0 {
+		p = props[0]
+	}
+
+	return CreateElement("hr", p)
 }
 
 func Html(props *Props, children ...interface{}) *Element {
@@ -229,12 +235,21 @@ func Iframe(props *Props, children ...interface{}) *Element {
 	return CreateElement("iframe", props, children...)
 }
 
-func Img(props *Props, children ...interface{}) *Element {
-	return CreateElement("img", props, children...)
+func Img(src string, alt string, props ...*Props) *Element {
+	p := &Props{}
+
+	if len(props) > 0 && props[0] != nil {
+		p = props[0]
+	}
+
+	p.Src = src
+	p.Alt = alt
+
+	return CreateElement("img", p)
 }
 
-func Input(props *Props, children ...interface{}) *Element {
-	return CreateElement("input", props, children...)
+func Input(props *Props) *Element {
+	return CreateElement("input", props)
 }
 
 func Ins(props *Props, children ...interface{}) *Element {
@@ -307,8 +322,8 @@ func Nav(props *Props, children ...interface{}) *Element {
 	return CreateElement("nav", props, children...)
 }
 
-func Noscript(props *Props, children ...interface{}) *Element {
-	return CreateElement("noscript", props, children...)
+func Noscript(children ...interface{}) *Element {
+	return CreateElement("noscript", nil, children...)
 }
 
 func Object(props *Props, children ...interface{}) *Element {
@@ -459,8 +474,8 @@ func Time(props *Props, children ...interface{}) *Element {
 	return CreateElement("time", props, children...)
 }
 
-func Title(props *Props, children ...interface{}) *Element {
-	return CreateElement("title", props, children...)
+func Title(title string, args ...interface{}) *Element {
+	return CreateElement("title", nil, fmt.Sprintf(title, args...))
 }
 
 func Tr(props *Props, children ...interface{}) *Element {
