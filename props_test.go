@@ -30,4 +30,9 @@ func TestProps(t *testing.T) {
 		assert.Contains(t, p.String(), `my-custom-prop="test"`)
 		assert.Contains(t, p.String(), `width="10"`)
 	})
+
+	t.Run("it should conver class list correctly", func(t *testing.T) {
+		p := &Props{ClassName: []string{"class-1", "class-2", "class-3"}}
+		assert.Equal(t, `class="class-1 class-2 class-3"`, p.String())
+	})
 }

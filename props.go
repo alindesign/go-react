@@ -145,9 +145,12 @@ func (p *Props) attrs(values map[string]interface{}, fn func(key, val string)) {
 		attr := p.getAttrName(key)
 		strValue := attr
 
-		switch value.(type) {
+		switch val := value.(type) {
 		case *Style:
-			strValue = value.(*Style).String()
+			strValue = val.String()
+			break
+		case []string:
+			strValue = strings.Join(val, " ")
 			break
 		default:
 			strValue = template.HTMLEscapeString(cast.ToString(value))
