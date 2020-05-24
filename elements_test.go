@@ -154,6 +154,12 @@ func TestMeta(t *testing.T) {
 			})
 		})
 	})
+
+	t.Run("it should correctly return http-equiv meta", func(t *testing.T) {
+		meta, err := Render(Meta("", "ie=edge", &Props{HttpEquiv: "X-UA-Compatible"}))
+		assert.NoError(t, err)
+		assert.Equal(t, "<meta content=\"ie=edge\" http-equiv=\"X-UA-Compatible\" />", meta)
+	})
 }
 
 func TestJavascript(t *testing.T) {

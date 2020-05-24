@@ -114,6 +114,7 @@ type Props struct {
 
 	CustomProps interface{}
 	Property    interface{}
+	HttpEquiv   interface{}
 }
 
 func (p *Props) String() string {
