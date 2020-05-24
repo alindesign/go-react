@@ -394,8 +394,34 @@ func Samp(props *Props, children ...interface{}) *Element {
 	return CreateElement("samp", props, children...)
 }
 
-func Script(props *Props, children ...interface{}) *Element {
-	return CreateElement("script", props, children...)
+func Script(source interface{}, props *Props) *Element {
+	var children interface{}
+	p := &Props{}
+
+	if props != nil {
+		p = props
+	}
+
+	if source != nil && source != "" {
+		switch src := source.(type) {
+		case string:
+			p.Src = src
+			break
+		case template.URL:
+			p.Src = string(src)
+			break
+
+		case template.JS:
+			children = src
+			break
+		}
+	}
+
+	if p.Type == nil {
+		p.Type = "application/javascript"
+	}
+
+	return CreateElement("script", p, children)
 }
 
 func Section(props *Props, children ...interface{}) *Element {
@@ -422,8 +448,18 @@ func Strong(props *Props, children ...interface{}) *Element {
 	return CreateElement("strong", props, children...)
 }
 
-func StyleTag(props *Props, children ...interface{}) *Element {
-	return CreateElement("styleTag", props, children...)
+func StyleTag(style template.CSS, props ...*Props) *Element {
+	p := &Props{}
+
+	if len(props) > 0 && props[0] != nil {
+		p = props[0]
+	}
+
+	if p.Type == nil {
+		p.Type = "text/css"
+	}
+
+	return CreateElement("style", p, style)
 }
 
 func Sub(props *Props, children ...interface{}) *Element {

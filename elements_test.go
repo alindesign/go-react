@@ -2,6 +2,7 @@ package react
 
 import (
 	"github.com/stretchr/testify/assert"
+	"html/template"
 	"testing"
 )
 
@@ -151,6 +152,38 @@ func TestMeta(t *testing.T) {
 				assert.Contains(t, meta, "content=\"content value\"")
 				assert.Contains(t, meta, "property=\"propName\"")
 			})
+		})
+	})
+}
+
+func TestJavascript(t *testing.T) {
+	t.Run("it should correctly render script tag", func(t *testing.T) {
+		t.Run("on empty", func(t *testing.T) {
+			content, err := Render(Script("", nil))
+
+			assert.NoError(t, err)
+			assert.Equal(t, "<script type=\"application/javascript\"></script>", content)
+		})
+
+		t.Run("on src string", func(t *testing.T) {
+			content, err := Render(Script("/local/file.js", nil))
+
+			assert.NoError(t, err)
+			assert.Equal(t, "<script src=\"/local/file.js\" type=\"application/javascript\"></script>", content)
+		})
+
+		t.Run("on src URL", func(t *testing.T) {
+			content, err := Render(Script(template.URL("/local/file.js"), nil))
+
+			assert.NoError(t, err)
+			assert.Equal(t, "<script src=\"/local/file.js\" type=\"application/javascript\"></script>", content)
+		})
+
+		t.Run("on src JS", func(t *testing.T) {
+			content, err := Render(Script(template.JS(`function a () { return "hello" } alert(a());`), nil))
+
+			assert.NoError(t, err)
+			assert.Equal(t, "<script type=\"application/javascript\">function a () { return \"hello\" } alert(a());</script>", content)
 		})
 	})
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/iancoleman/strcase"
 	"github.com/spf13/cast"
 	"html/template"
+	"sort"
 	"strings"
 )
 
@@ -183,6 +184,8 @@ func (p *Props) toSlice(attrs map[string]string) []string {
 	for key, value := range attrs {
 		slice = append(slice, key+`="`+value+`"`)
 	}
+
+	sort.Strings(slice)
 
 	return slice
 }
