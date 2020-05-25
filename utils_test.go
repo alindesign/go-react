@@ -109,5 +109,65 @@ func TestToMap(t *testing.T) {
 			assert.True(t, c)
 			assert.True(t, d)
 		})
+
+		t.Run("convert map to map", func(t *testing.T) {
+			m := toMap(map[string]interface{}{
+				"B": "b",
+				"C": "c",
+				"D": "d",
+			})
+
+			mb, b := m["B"]
+			mc, c := m["C"]
+			md, d := m["D"]
+
+			assert.Equal(t, mb, "b")
+			assert.Equal(t, mc, "c")
+			assert.Equal(t, md, "d")
+
+			assert.True(t, b)
+			assert.True(t, c)
+			assert.True(t, d)
+		})
+
+		t.Run("convert slice of map to map", func(t *testing.T) {
+			m := toMap([]map[string]interface{}{
+				{"B": "b"},
+				{"C": "c"},
+				{"D": "d"},
+			})
+
+			mb, b := m["B"]
+			mc, c := m["C"]
+			md, d := m["D"]
+
+			assert.Equal(t, mb, "b")
+			assert.Equal(t, mc, "c")
+			assert.Equal(t, md, "d")
+
+			assert.True(t, b)
+			assert.True(t, c)
+			assert.True(t, d)
+		})
+
+		t.Run("convert slice of map and struct to map", func(t *testing.T) {
+			m := toMap([]interface{}{
+				map[string]interface{}{"B": "b"},
+				&StructA{C: "c"},
+				StructA{D: "d"},
+			})
+
+			mb, b := m["B"]
+			mc, c := m["C"]
+			md, d := m["D"]
+
+			assert.Equal(t, mb, "b")
+			assert.Equal(t, mc, "c")
+			assert.Equal(t, md, "d")
+
+			assert.True(t, b)
+			assert.True(t, c)
+			assert.True(t, d)
+		})
 	})
 }

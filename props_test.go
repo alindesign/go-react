@@ -6,8 +6,12 @@ import (
 )
 
 type MyProps struct {
-	MyCustomProp interface{} `structs:",omitempty"`
-	MySecondProp interface{} `structs:",omitempty"`
+	MyCustomProp interface{}
+	MySecondProp interface{}
+}
+
+type customThings struct {
+	DataHello interface{}
 }
 
 func TestProps(t *testing.T) {
@@ -31,8 +35,18 @@ func TestProps(t *testing.T) {
 		assert.Contains(t, p.String(), `width="10"`)
 	})
 
-	t.Run("it should conver class list correctly", func(t *testing.T) {
+	t.Run("it should convert class list correctly", func(t *testing.T) {
 		p := &Props{ClassName: []string{"class-1", "class-2", "class-3"}}
 		assert.Equal(t, `class="class-1 class-2 class-3"`, p.String())
+	})
+
+	t.Run("it should be able to add multiple custom props", func(t *testing.T) {
+		mp := &MyProps{MyCustomProp: "test"}
+		p := &Props{Width: 10, CustomProps: []interface{}{
+			mp,
+			&customThings{DataHello: "hi"},
+			map[string]interface{}{"data-test": "test"},
+		}}
+		assert.Equal(t, p.String(), `data-hello="hi" data-test="test" my-custom-prop="test" width="10"`)
 	})
 }
