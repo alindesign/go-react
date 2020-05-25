@@ -78,11 +78,7 @@ func render(component *Element, ctx *Context) (string, error) {
 				var errChunk error
 
 				if c != nil {
-					if IsComponent(c) {
-						chunk, errChunk = renderElement(renderComponent(c, ctx), ctx)
-					} else {
-						chunk, errChunk = renderElement(c, ctx)
-					}
+					chunk, errChunk = renderElement(c, ctx)
 				}
 
 				if errChunk != nil {
@@ -108,6 +104,10 @@ func render(component *Element, ctx *Context) (string, error) {
 }
 
 func renderElement(element interface{}, ctx *Context) (string, error) {
+	if IsComponent(element) {
+		return renderElement(renderComponent(element, ctx), ctx)
+	}
+
 	switch el := element.(type) {
 	case *Element:
 		return render(el, ctx)
