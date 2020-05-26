@@ -1,10 +1,10 @@
 package react
 
 type DocumentProps struct {
-	Head      interface{}
+	Head      *Element
 	HeadProps *Props
 
-	Body      interface{}
+	Body      *Element
 	BodyProps *Props
 
 	Doctype string

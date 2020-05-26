@@ -1,46 +1,42 @@
 package react
 
 import (
-	"fmt"
 	"html/template"
 )
 
+var voidElements = []string{"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
 type Element struct {
-	Tag      string
-	Props    *Props
-	Childs   []interface{}
-	Fragment bool
+	Type   int
+	Tag    string
+	Props  *Props
+	Childs []*Element
+	Text   string
+	CSS    template.CSS
+	JS     template.JS
+	HTML   template.HTML
 }
 
-func IsElement(value interface{}) bool {
-	isComponent := IsComponent(value)
-	_, isElement := value.(*Element)
-	_, isString := value.(string)
-	_, isHtml := value.(template.HTML)
-	_, isCss := value.(template.CSS)
-	_, isJs := value.(template.JS)
-
-	return IsFragment(value) || isComponent || isElement || isString || isHtml || isCss || isJs
+func CreateElement(tag string, props *Props, childs ...*Element) *Element {
+	return &Element{
+		Type:   TYPE_ELEMENT,
+		Tag:    tag,
+		Props:  props,
+		Childs: childs,
+	}
 }
 
-func CheckElement(value interface{}) error {
-	if value != nil && !IsElement(value) {
-		return fmt.Errorf(`Invalid element, child should be one of: 
-	- *react.Element
-	- *AnyStruct that implements react.ComponentStruct
-	- template.HTML
-	- template.CSS
-	- template.JS
-	- string
-	- nil
+func (e *Element) isVoidElement() bool {
+	found := false
 
-	Received: '%T'
-`, value)
+	if e.Type == TYPE_ELEMENT {
+		for _, voidTag := range voidElements {
+			if e.Tag == voidTag {
+				found = true
+				break
+			}
+		}
 	}
 
-	return nil
-}
-
-func CreateElement(tag string, props *Props, childs ...interface{}) *Element {
-	return &Element{Tag: tag, Props: props, Childs: childs}
+	return found
 }

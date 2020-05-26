@@ -117,6 +117,10 @@ type Props struct {
 	HttpEquiv   interface{}
 }
 
+func NewProps() *Props {
+	return &Props{}
+}
+
 func (p *Props) String() string {
 	if p == nil {
 		return ""

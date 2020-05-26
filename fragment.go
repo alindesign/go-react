@@ -1,25 +1,12 @@
 package react
 
-func IsFragment(value interface{}) bool {
-	if value == nil {
-		return false
-	}
-	v, ok := value.(*Element)
-
-	if v == nil {
-		return false
-	}
-
-	return ok && v.Fragment
-}
-
-func Fragment(childs ...interface{}) *Element {
+func Fragment(childs ...*Element) *Element {
 	return &Element{
-		Childs:   childs,
-		Fragment: true,
+		Type:   TYPE_FRAGMENT,
+		Childs: childs,
 	}
 }
 
-func CreateFragment(childs ...interface{}) *Element {
+func CreateFragment(childs ...*Element) *Element {
 	return Fragment(childs...)
 }

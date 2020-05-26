@@ -6,7 +6,7 @@ import (
 
 func BenchmarkSimpleElement(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		_, _ = Render(CreateElement("div", &Props{
+		Render(CreateElement("div", &Props{
 			ClassName: "ui__container",
 		}))
 	}
@@ -14,13 +14,13 @@ func BenchmarkSimpleElement(b *testing.B) {
 
 func BenchmarkSmallElement(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		_, _ = Render(App())
+		Render(App())
 	}
 }
 
 func BenchmarkTreeElement(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		_, _ = Render(CreateElement("div", nil, List(4),
+		Render(CreateElement("div", nil, List(4),
 			CreateElement("div", nil, List(4),
 				CreateElement("div", nil, List(4)),
 				CreateElement("div", nil, List(4)),
