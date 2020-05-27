@@ -50,14 +50,14 @@ func main () {
 #### Elements
 Built in shortcuts to HTML elements
 ```go
-element := react.H1(nil, "child 2")
-div := react.Div(nil, "child 1", element)
+element := react.H1(nil, react.Text("child 2"))
+div := react.Div(nil, react.Text("child 1"), element)
 ```
 #### Fragments
 ```go
 fragment := react.Fragment(
-    react.H1(nil, "Title"),
-    react.H3(nil, "text"),
+    react.H1(nil, react.Text("Title")),
+    react.H3(nil, react.Text("text")),
 )
 ```
 
