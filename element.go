@@ -1,46 +1,48 @@
 package react
 
 import (
-	"fmt"
 	"html/template"
 )
 
 type Element struct {
-	Tag      string
-	Props    *Props
-	Childs   []interface{}
-	Fragment bool
+	Type      int
+	Tag       string
+	Props     Props
+	Childs    []*Element
+	Text      string
+	CSS       template.CSS
+	JS        template.JS
+	HTML      template.HTML
+	render    ComponentFunc
+	component ComponentStruct
 }
 
-func IsElement(value interface{}) bool {
-	isComponent := IsComponent(value)
-	_, isElement := value.(*Element)
-	_, isString := value.(string)
-	_, isHtml := value.(template.HTML)
-	_, isCss := value.(template.CSS)
-	_, isJs := value.(template.JS)
-
-	return IsFragment(value) || isComponent || isElement || isString || isHtml || isCss || isJs
+func CreateElement(tag string, props Props, childs ...*Element) *Element {
+	return &Element{
+		Type:   TYPE_ELEMENT,
+		Tag:    tag,
+		Props:  props,
+		Childs: childs,
+	}
 }
 
-func CheckElement(value interface{}) error {
-	if value != nil && !IsElement(value) {
-		return fmt.Errorf(`Invalid element, child should be one of: 
-	- *react.Element
-	- *AnyStruct that implements react.ComponentStruct
-	- template.HTML
-	- template.CSS
-	- template.JS
-	- string
-	- nil
-
-	Received: '%T'
-`, value)
+func (e *Element) isVoidElement() bool {
+	if e.Type == TYPE_ELEMENT {
+		return e.Tag == "area" ||
+			e.Tag == "base" ||
+			e.Tag == "br" ||
+			e.Tag == "col" ||
+			e.Tag == "embed" ||
+			e.Tag == "hr" ||
+			e.Tag == "img" ||
+			e.Tag == "input" ||
+			e.Tag == "link" ||
+			e.Tag == "meta" ||
+			e.Tag == "param" ||
+			e.Tag == "source" ||
+			e.Tag == "track" ||
+			e.Tag == "wbr"
 	}
 
-	return nil
-}
-
-func CreateElement(tag string, props *Props, childs ...interface{}) *Element {
-	return &Element{Tag: tag, Props: props, Childs: childs}
+	return false
 }
