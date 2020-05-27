@@ -1,46 +1,46 @@
 package react
 
-func Meta(name, content string, props *Props) *Element {
-	p := &Props{}
+func Meta(name, content string, props Props) *Element {
+	p := Props{}
 
 	if props != nil {
 		p = props
 	}
 
 	if name != "" {
-		p.Name = name
+		p["name"] = name
 	}
 
 	if content != "" {
-		p.Content = content
+		p["content"] = content
 	}
 
 	return CreateElement("meta", p)
 }
 
-func MetaItemProp(name, content string, props *Props) *Element {
-	p := &Props{}
+func MetaItemProp(name, content string, props Props) *Element {
+	p := Props{}
 
 	if props != nil {
 		p = props
 	}
 
 	if name != "" {
-		p.Itemprop = name
+		p["itemprop"] = name
 	}
 
 	return Meta("", content, p)
 }
 
-func MetaProperty(name, content string, props *Props) *Element {
-	p := &Props{}
+func MetaProperty(name, content string, props Props) *Element {
+	p := Props{}
 
 	if props != nil {
 		p = props
 	}
 
 	if name != "" {
-		p.Property = name
+		p["property"] = name
 	}
 
 	return Meta("", content, p)
@@ -55,5 +55,5 @@ func MetaCharset(charset ...string) *Element {
 		}
 	}
 
-	return Meta("", "", &Props{Charset: cset})
+	return Meta("", "", Props{"charset": cset})
 }

@@ -9,19 +9,19 @@ import (
 func List(num int) *Element {
 	var items []*Element
 	for i := 0; i < num; i++ {
-		items = append(items, CreateElement("li", &Props{
-			ClassName: "list__item item-" + strconv.Itoa(i+1),
+		items = append(items, CreateElement("li", Props{
+			"className": "list__item item-" + strconv.Itoa(i+1),
 		}, Text("Item %d", i+1)))
 	}
 
-	return CreateElement("ul", &Props{
-		ClassName: "list__root",
+	return CreateElement("ul", Props{
+		"className": "list__root",
 	}, items...)
 }
 
 func App() *Element {
-	return CreateElement("div", &Props{
-		ClassName: "root",
+	return CreateElement("div", Props{
+		"className": "root",
 	}, List(4))
 }
 
@@ -39,41 +39,41 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should render a simple div", func(t *testing.T) {
-		div := Render(CreateElement("div", &Props{
-			ClassName: "container",
+		div := Render(CreateElement("div", Props{
+			"className": "container",
 		}))
 
 		assert.Equal(t, `<div class="container"></div>`, div)
 	})
 
-	t.Run("it should render a small component", func(t *testing.T) {
+	t.Run("it should render a small Component", func(t *testing.T) {
 		div := Render(App())
 
 		assert.Equal(t, `<div class="root"><ul class="list__root"><li class="list__item item-1">Item 1</li><li class="list__item item-2">Item 2</li><li class="list__item item-3">Item 3</li><li class="list__item item-4">Item 4</li></ul></div>`, div)
 	})
 
 	t.Run("it should render attrs correctly", func(t *testing.T) {
-		div := Render(CreateElement("div", &Props{
-			Data: `{"json": "true"}`,
+		div := Render(CreateElement("div", Props{
+			"data": `{"json": "true"}`,
 		}))
 
 		assert.Equal(t, `<div data="{&#34;json&#34;: &#34;true&#34;}"></div>`, div)
 	})
 
 	t.Run("it should render children correctly", func(t *testing.T) {
-		div := Render(CreateElement("div", &Props{
-			Data: `{"json": "true"}`,
+		div := Render(CreateElement("div", Props{
+			"data": `{"json": "true"}`,
 		}, Text("Text <script>function () { alert('broken'); }</script>")))
 
 		assert.Equal(t, `<div data="{&#34;json&#34;: &#34;true&#34;}">Text &lt;script&gt;function () { alert(&#39;broken&#39;); }&lt;/script&gt;</div>`, div)
 	})
 
 	t.Run("it should correctly run a void element", func(t *testing.T) {
-		div := Render(CreateElement("img", &Props{
-			Src: `url`,
+		div := Render(CreateElement("img", Props{
+			"src": `url`,
 		}, Text("Children elements text")))
 
-		assert.Equal(t, `<img src="url" />`, div)
+		assert.Equal(t, `<img src="url"/>`, div)
 	})
 
 	t.Run("it should render fragment correctly", func(t *testing.T) {

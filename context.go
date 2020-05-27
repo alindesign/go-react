@@ -1,7 +1,23 @@
 package react
 
+import (
+	"log"
+	"sync"
+	"time"
+)
+
+var ctxl sync.Mutex
+
 type Context struct {
-	data map[string]interface{}
+	data  map[string]interface{}
+	nodes int
+	start time.Time
+}
+
+func (c *Context) CountNode() {
+	ctxl.Lock()
+	c.nodes = c.nodes + 1
+	ctxl.Unlock()
 }
 
 func (c *Context) SetData(data map[string]interface{}) {
@@ -57,10 +73,19 @@ func (c *Context) Unset(key string) *Context {
 	return c
 }
 
+func (c *Context) Stats() {
+	diff := time.Now().Sub(c.start)
+	log.Printf("go-react: %d nodes rendered in %s", c.nodes, diff)
+}
+
 func NewContextWithData(data map[string]interface{}) *Context {
 	return &Context{data: data}
 }
 
 func NewContext() *Context {
-	return &Context{data: map[string]interface{}{}}
+	return &Context{
+		data:  map[string]interface{}{},
+		nodes: 0,
+		start: time.Now(),
+	}
 }

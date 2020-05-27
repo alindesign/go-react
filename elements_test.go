@@ -57,30 +57,30 @@ func TestMeta(t *testing.T) {
 		t.Run("empty call", func(t *testing.T) {
 			meta := Render(MetaCharset())
 
-			assert.Equal(t, "<meta charset=\"UTF-8\" />", meta)
+			assert.Equal(t, "<meta charset=\"UTF-8\"/>", meta)
 		})
 
 		t.Run("custom charset", func(t *testing.T) {
 			meta := Render(MetaCharset("ISO-8859-1"))
 
-			assert.Equal(t, "<meta charset=\"ISO-8859-1\" />", meta)
+			assert.Equal(t, "<meta charset=\"ISO-8859-1\"/>", meta)
 		})
 	})
 
 	t.Run("it should correctly return meta tag", func(t *testing.T) {
 		t.Run("null call", func(t *testing.T) {
 			meta := Render(Meta("", "", nil))
-			assert.Equal(t, "<meta />", meta)
+			assert.Equal(t, "<meta/>", meta)
 		})
 
 		t.Run("name call", func(t *testing.T) {
 			meta := Render(Meta("propName", "", nil))
-			assert.Equal(t, "<meta name=\"propName\" />", meta)
+			assert.Equal(t, "<meta name=\"propName\"/>", meta)
 		})
 
 		t.Run("content call", func(t *testing.T) {
 			meta := Render(Meta("", "content value", nil))
-			assert.Equal(t, "<meta content=\"content value\" />", meta)
+			assert.Equal(t, "<meta content=\"content value\"/>", meta)
 		})
 
 		t.Run("name and content call", func(t *testing.T) {
@@ -93,17 +93,17 @@ func TestMeta(t *testing.T) {
 	t.Run("it should correctly return meta itemprop tag", func(t *testing.T) {
 		t.Run("null call", func(t *testing.T) {
 			meta := Render(MetaItemProp("", "", nil))
-			assert.Equal(t, "<meta />", meta)
+			assert.Equal(t, "<meta/>", meta)
 		})
 
 		t.Run("itemprop call", func(t *testing.T) {
 			meta := Render(MetaItemProp("propName", "", nil))
-			assert.Equal(t, "<meta itemprop=\"propName\" />", meta)
+			assert.Equal(t, "<meta itemprop=\"propName\"/>", meta)
 		})
 
 		t.Run("content call", func(t *testing.T) {
 			meta := Render(MetaItemProp("", "content value", nil))
-			assert.Equal(t, "<meta content=\"content value\" />", meta)
+			assert.Equal(t, "<meta content=\"content value\"/>", meta)
 		})
 
 		t.Run("itemprop and content call", func(t *testing.T) {
@@ -111,34 +111,33 @@ func TestMeta(t *testing.T) {
 			assert.Contains(t, meta, "content=\"content value\"")
 			assert.Contains(t, meta, "itemprop=\"propName\"")
 		})
+	})
+	t.Run("it should correctly return meta property tag", func(t *testing.T) {
+		t.Run("null call", func(t *testing.T) {
+			meta := Render(MetaProperty("", "", nil))
+			assert.Equal(t, "<meta/>", meta)
+		})
 
-		t.Run("it should correctly return meta property tag", func(t *testing.T) {
-			t.Run("null call", func(t *testing.T) {
-				meta := Render(MetaProperty("", "", nil))
-				assert.Equal(t, "<meta />", meta)
-			})
+		t.Run("property call", func(t *testing.T) {
+			meta := Render(MetaProperty("propName", "", nil))
+			assert.Equal(t, "<meta property=\"propName\"/>", meta)
+		})
 
-			t.Run("property call", func(t *testing.T) {
-				meta := Render(MetaProperty("propName", "", nil))
-				assert.Equal(t, "<meta property=\"propName\" />", meta)
-			})
+		t.Run("content call", func(t *testing.T) {
+			meta := Render(MetaProperty("", "content value", nil))
+			assert.Equal(t, "<meta content=\"content value\"/>", meta)
+		})
 
-			t.Run("content call", func(t *testing.T) {
-				meta := Render(MetaProperty("", "content value", nil))
-				assert.Equal(t, "<meta content=\"content value\" />", meta)
-			})
-
-			t.Run("property and content call", func(t *testing.T) {
-				meta := Render(MetaProperty("propName", "content value", nil))
-				assert.Contains(t, meta, "content=\"content value\"")
-				assert.Contains(t, meta, "property=\"propName\"")
-			})
+		t.Run("property and content call", func(t *testing.T) {
+			meta := Render(MetaProperty("propName", "content value", nil))
+			assert.Contains(t, meta, "content=\"content value\"")
+			assert.Contains(t, meta, "property=\"propName\"")
 		})
 	})
 
 	t.Run("it should correctly return http-equiv meta", func(t *testing.T) {
-		meta := Render(Meta("", "ie=edge", &Props{HttpEquiv: "X-UA-Compatible"}))
-		assert.Equal(t, "<meta content=\"ie=edge\" http-equiv=\"X-UA-Compatible\" />", meta)
+		meta := Render(Meta("", "ie=edge", Props{"http-equiv": "X-UA-Compatible"}))
+		assert.Equal(t, "<meta content=\"ie=edge\" http-equiv=\"X-UA-Compatible\"/>", meta)
 	})
 }
 

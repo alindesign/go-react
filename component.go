@@ -1,43 +1,24 @@
 package react
 
-import (
-	"reflect"
-)
-
+type ComponentFunc func(ctx *Context) *Element
 type ComponentStruct interface {
-	Render(ctx *Context) interface{}
+	Render(ctx *Context) *Element
 }
 
-func IsComponent(value interface{}) bool {
-	ok := false
-
-	if value != nil {
-		rVal := reflect.TypeOf(value)
-		_, ok = rVal.MethodByName("Render")
+func Component(component interface{}) *Element {
+	switch x := component.(type) {
+	case func(ctx *Context) *Element:
+		return &Element{
+			Type:   TYPE_COMPONENT,
+			render: x,
+		}
+	case *ComponentStruct:
+	case ComponentStruct:
+		return &Element{
+			Type:      TYPE_COMPONENT_STRUCT,
+			component: x,
+		}
 	}
 
-	return ok
-}
-
-func renderComponent(value interface{}, ctx interface{}) interface{} {
-	if !IsComponent(value) {
-		return nil
-	}
-
-	rVal := reflect.ValueOf(value)
-	method := rVal.MethodByName("Render")
-
-	if method.IsZero() || method.IsNil() {
-		return nil
-	}
-
-	var result []reflect.Value
-
-	if ctx != nil {
-		result = method.Call([]reflect.Value{reflect.ValueOf(ctx)})
-	} else {
-		result = method.Call([]reflect.Value{reflect.ValueOf(NewContext())})
-	}
-
-	return result[0].Interface()
+	return nil
 }

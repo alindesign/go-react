@@ -2,17 +2,17 @@ package react
 
 type DocumentProps struct {
 	Head      *Element
-	HeadProps *Props
+	HeadProps Props
 
 	Body      *Element
-	BodyProps *Props
+	BodyProps Props
 
 	Doctype string
 }
 
-func Document(documentProps *DocumentProps, props *Props) *Element {
+func Document(documentProps *DocumentProps, props Props) *Element {
 	dProps := &DocumentProps{}
-	hProps := &Props{}
+	hProps := Props{}
 
 	if documentProps != nil {
 		dProps = documentProps
@@ -22,8 +22,8 @@ func Document(documentProps *DocumentProps, props *Props) *Element {
 		hProps = props
 	}
 
-	if hProps.Lang == "" || hProps.Lang == nil {
-		hProps.Lang = "en"
+	if !hProps.Has("lang") {
+		hProps["lang"] = "en"
 	}
 
 	return CreateFragment(

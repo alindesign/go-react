@@ -4,20 +4,20 @@ import (
 	"html/template"
 )
 
-var voidElements = []string{"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
-
 type Element struct {
-	Type   int
-	Tag    string
-	Props  *Props
-	Childs []*Element
-	Text   string
-	CSS    template.CSS
-	JS     template.JS
-	HTML   template.HTML
+	Type      int
+	Tag       string
+	Props     Props
+	Childs    []*Element
+	Text      string
+	CSS       template.CSS
+	JS        template.JS
+	HTML      template.HTML
+	render    ComponentFunc
+	component ComponentStruct
 }
 
-func CreateElement(tag string, props *Props, childs ...*Element) *Element {
+func CreateElement(tag string, props Props, childs ...*Element) *Element {
 	return &Element{
 		Type:   TYPE_ELEMENT,
 		Tag:    tag,
@@ -27,16 +27,22 @@ func CreateElement(tag string, props *Props, childs ...*Element) *Element {
 }
 
 func (e *Element) isVoidElement() bool {
-	found := false
-
 	if e.Type == TYPE_ELEMENT {
-		for _, voidTag := range voidElements {
-			if e.Tag == voidTag {
-				found = true
-				break
-			}
-		}
+		return e.Tag == "area" ||
+			e.Tag == "base" ||
+			e.Tag == "br" ||
+			e.Tag == "col" ||
+			e.Tag == "embed" ||
+			e.Tag == "hr" ||
+			e.Tag == "img" ||
+			e.Tag == "input" ||
+			e.Tag == "link" ||
+			e.Tag == "meta" ||
+			e.Tag == "param" ||
+			e.Tag == "source" ||
+			e.Tag == "track" ||
+			e.Tag == "wbr"
 	}
 
-	return found
+	return false
 }

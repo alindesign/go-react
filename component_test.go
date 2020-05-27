@@ -5,19 +5,9 @@ import (
 	"testing"
 )
 
-type TestComponent struct {
-	Name string
-}
-
-func (t *TestComponent) Render(ctx *Context) interface{} {
-	return H1(nil, Text("Hello %s! %s", t.Name, ctx.GetString("welcomeMessage")))
-}
-
-func TestIsComponent(t *testing.T) {
-	t.Run("it should check if struct it's a Component class like", func(t *testing.T) {
-		comp := &TestComponent{}
-
-		assert.True(t, IsComponent(comp))
+func helloComponent(Name string) *Element {
+	return Component(func(ctx *Context) *Element {
+		return H1(nil, Text("Hello %s! %s", Name, ctx.GetString("welcomeMessage")))
 	})
 }
 
@@ -27,68 +17,88 @@ type LayoutMountPoints struct {
 	Content *Element
 }
 
-type LayoutBaseComponent struct {
-	mounts *LayoutMountPoints
-}
+func LayoutBase(mounts *LayoutMountPoints) *Element {
+	return Component(func(ctx *Context) *Element {
+		if mounts == nil {
+			mounts = &LayoutMountPoints{}
+		}
 
-func (l *LayoutBaseComponent) Render(ctx *Context) interface{} {
-	if l.mounts == nil {
-		l.mounts = &LayoutMountPoints{}
-	}
-
-	return Document(&DocumentProps{
-		Head: Fragment(
-			MetaCharset(),
-			l.mounts.Head,
-		),
-		Body: Fragment(
-			CreateElement("header", nil, l.mounts.Header),
-			l.mounts.Content,
-		),
-	}, nil)
-}
-
-func LayoutBase(mounts *LayoutMountPoints) *LayoutBaseComponent {
-	return &LayoutBaseComponent{mounts: mounts}
+		return Document(&DocumentProps{
+			Head: Fragment(
+				MetaCharset(),
+				mounts.Head,
+			),
+			Body: Fragment(
+				CreateElement("header", nil, mounts.Header),
+				mounts.Content,
+			),
+		}, nil)
+	})
 }
 
 func TestRenderClassLike(t *testing.T) {
-	// t.Run("it should correctly render component class like", func(t *testing.T) {
-	// 	content := Render(Div(nil,
-	// 		Span(nil, "span el"),
-	// 		&TestComponent{Name: "David"},
-	// 	), map[string]interface{}{
-	// 		"welcomeMessage": "How are you?",
-	// 	})
-	//
-	// 	assert.Equal(t, "<div><span>span el</span><h1>Hello David! How are you?</h1></div>", content)
-	// })
+	t.Run("it should correctly render Component class like", func(t *testing.T) {
+		content := Render(Div(nil,
+			Span(nil, Text("span el")),
+			helloComponent("David"),
+		), map[string]interface{}{
+			"welcomeMessage": "How are you?",
+		})
 
-	// t.Run("it should correctly render advanced layout structure", func(t *testing.T) {
-	// 	comp := LayoutBase(&LayoutMountPoints{
-	// 		Content: Fragment(
-	// 			H1(nil, "Hello World!"),
-	// 		),
-	// 	})
-	//
-	// 	content, err := Render(Fragment(
-	// 		comp,
-	// 	))
-	//
-	// 	assert.True(t, IsComponent(comp))
-	// 	assert.NoError(t, err)
-	// 	assert.Equal(t, `<!doctype html><html lang="en"><head><meta charset="UTF-8" /></head><body><header></header><h1>Hello World!</h1></body></html>`, content)
-	// })
+		assert.Equal(t, "<div><span>span el</span><h1>Hello David! How are you?</h1></div>", content)
+	})
+
+	t.Run("it should correctly render advanced layout structure", func(t *testing.T) {
+		comp := LayoutBase(&LayoutMountPoints{
+			Content: Fragment(
+				H1(nil, Text("Hello World!")),
+			),
+		})
+
+		content := Render(comp)
+
+		assert.Equal(t, `<!doctype html><html lang="en"><head><meta charset="UTF-8"/></head><body><header></header><h1>Hello World!</h1></body></html>`, content)
+	})
 }
 
-type TestStringComp struct{}
-
-func (t TestStringComp) Render(ctx *Context) interface{} {
-	return "test string"
+func renderComponentStr(ctx *Context) *Element {
+	return Text("test string")
 }
 
 func TestRenderComponent(t *testing.T) {
-	r := renderComponent(&TestStringComp{}, nil)
+	r := Render(Component(renderComponentStr), nil)
 
 	assert.Equal(t, "test string", r)
+}
+
+type compStruct struct {
+	Name string
+}
+
+func (c compStruct) Render(ctx *Context) *Element {
+	return H1(nil, Text("Hello %s!", c.Name))
+}
+
+type compPStruct struct {
+	Name string
+}
+
+func (c *compPStruct) Render(ctx *Context) *Element {
+	return H1(nil, Text("Hello %s!", c.Name))
+}
+
+func TestComponentStruct(t *testing.T) {
+	t.Run("it should render component structs correctly", func(t *testing.T) {
+		r := Render(Component(compStruct{Name: "Arthur"}), nil)
+		rp := Render(Component(&compStruct{Name: "Arthur"}), nil)
+
+		assert.Equal(t, "<h1>Hello Arthur!</h1>", r)
+		assert.Equal(t, "<h1>Hello Arthur!</h1>", rp)
+	})
+
+	t.Run("it should render component pointer render structs correctly", func(t *testing.T) {
+		rp := Render(Component(&compPStruct{Name: "Arthur"}), nil)
+
+		assert.Equal(t, "<h1>Hello Arthur!</h1>", rp)
+	})
 }

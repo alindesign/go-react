@@ -1,46 +1,72 @@
 package react
 
 import (
+	"math"
 	"strings"
 	"sync"
 )
 
-const indentSize = "    "
-
 type Renderer struct {
-	component *Element
-	context   *Context
-	pretty    bool
+	Context             *Context
+	Component           *Element
+	MaxConcurrentChunks int
 }
 
 func (r *Renderer) String() string {
-
-	return r.render(r.component, 0)
+	return r.render(r.Component)
 }
 
-func (r *Renderer) render(component *Element, level int) string {
+func (r *Renderer) render(component *Element) string {
+	r.Context.CountNode()
+
 	if component == nil {
 		return ""
 	}
 
-	if component.Type == TYPE_TEXT {
+	switch component.Type {
+	case TYPE_TEXT:
 		return component.Text
-	} else if component.Type == TYPE_CSS {
+	case TYPE_CSS:
 		return string(component.CSS)
-	} else if component.Type == TYPE_JS {
+	case TYPE_JS:
 		return string(component.JS)
-	} else if component.Type == TYPE_HTML {
+	case TYPE_HTML:
 		return string(component.HTML)
-	} else if component.Type == TYPE_FRAGMENT {
-		return r.renderChilds(component, level)
-	} else if component.Type == TYPE_ELEMENT {
-		return r.renderTag(component, level)
+	case TYPE_FRAGMENT:
+		return r.renderChilds(component)
+	case TYPE_ELEMENT:
+		return r.renderTag(component)
+	case TYPE_COMPONENT:
+		return r.render(component.render(r.getContext()))
+	case TYPE_COMPONENT_STRUCT:
+		return r.render(component.component.Render(r.getContext()))
+	default:
+		return ""
 	}
-
-	return ""
 }
 
-func (r *Renderer) renderChilds(component *Element, level int) string {
+func (r *Renderer) childChunks(component *Element) [][]*Element {
+	childsLen := len(component.Childs)
+	possibleChunks := int(math.Ceil(float64(childsLen) / float64(r.MaxConcurrentChunks)))
+	chunks := make([][]*Element, possibleChunks)
+
+	var chunk = 0
+	var count = 0
+
+	for _, el := range component.Childs {
+		if count < r.MaxConcurrentChunks {
+			chunks[chunk] = append(chunks[chunk], el)
+			count += 1
+		} else {
+			count = 0
+			chunk += 1
+		}
+	}
+
+	return chunks
+}
+
+func (r *Renderer) renderChilds(component *Element) string {
 	if component == nil || component.Childs == nil {
 		return ""
 	}
@@ -50,70 +76,117 @@ func (r *Renderer) renderChilds(component *Element, level int) string {
 		return ""
 	}
 
-	chunks := make([]string, chunksLength)
-	var wg sync.WaitGroup
-	wg.Add(chunksLength)
+	childs := r.childChunks(component)
+	chunks := make([]strings.Builder, len(childs))
 
-	for i, child := range component.Childs {
-		go func(i int, child *Element) {
-			if child != nil {
-				chunks[i] = r.render(child, level+1)
-			} else {
-				chunks[i] = ""
+	var wg sync.WaitGroup
+	wg.Add(len(childs))
+
+	for i, child := range childs {
+		go func(i int, child []*Element) {
+			var group strings.Builder
+
+			for _, element := range child {
+				if element != nil {
+					group.WriteString(r.render(element))
+				}
 			}
 
+			chunks[i] = group
 			wg.Done()
 		}(i, child)
 	}
 
 	wg.Wait()
 
-	return r.joinChunks(chunks, level)
+	return r.joinChunks(chunks)
 }
 
-func (r *Renderer) renderTag(component *Element, level int) string {
+func (r *Renderer) renderTag(component *Element) string {
 	if component == nil {
 		return ""
 	}
 
-	children := ""
-	start := "<" + component.Tag
-	end := "</" + component.Tag + ">"
-	isVoid := component.isVoidElement()
+	var isVoid = component.isVoidElement()
+	var children strings.Builder
+	var start strings.Builder
+	var end strings.Builder
+
+	start.WriteString("<")
+	start.WriteString(component.Tag)
 
 	if isVoid {
-		end = " />"
+		end.WriteString("/>")
 	} else {
-		children = r.renderChilds(component, level+1)
-	}
-
-	if component.Tag == "" {
-		return children
-	}
-
-	if component.Props != nil {
-		attrs := component.Props.String()
-		if attrs != "" {
-			start += " " + attrs
-		}
+		end.WriteString("</")
+		end.WriteString(component.Tag)
+		end.WriteString(">")
 	}
 
 	if !isVoid {
-		start += ">"
+		children.WriteString(r.renderChilds(component))
 	}
 
-	return start + children + end
+	if component.Tag == "" {
+		return children.String()
+	}
+
+	if component.Props != nil {
+		start.WriteString(component.Props.String())
+	}
+
+	if !isVoid {
+		start.WriteString(">")
+	}
+
+	start.WriteString(children.String())
+	start.WriteString(end.String())
+
+	return start.String()
 }
 
-func (r *Renderer) joinChunks(chunks []string, level int) string {
-	indent := ""
-	if r.pretty {
-		indent = "\n" + strings.Repeat(indentSize, level)
+func (r *Renderer) joinChunks(chunks []strings.Builder) string {
+	var content strings.Builder
+
+	for _, chunk := range chunks {
+		content.WriteString(chunk.String())
 	}
 
-	return indent + strings.Join(chunks, indent)
+	return content.String()
+}
+
+func (r *Renderer) getContext() *Context {
+	if r.Context == nil {
+		r.Context = NewContext()
+	}
+
+	return r.Context
+}
+
+func (r *Renderer) SetContext(ctx *Context) *Renderer {
+	r.Context = ctx
+	return r
+}
+
+func (r *Renderer) SetData(data ...map[string]interface{}) *Renderer {
+	if len(data) > 0 {
+		r.Context.SetData(data[0])
+	}
+	return r
+}
+
+func (r *Renderer) Stats() {
+	r.Context.Stats()
+}
+
+func (r *Renderer) Bytes() []byte {
+	return []byte(r.String())
 }
 
 func NewRenderer(component *Element) *Renderer {
-	return &Renderer{component: component}
+	return &Renderer{
+		Context:             NewContext(),
+		Component:           component,
+		MaxConcurrentChunks: 32,
+	}
 }

@@ -1,16 +1,20 @@
 package react
 
-func Render(component *Element, data ...map[string]interface{}) string {
-	ctx := NewContext()
-	if len(data) > 0 {
-		ctx.SetData(data[0])
-	}
+func render(component *Element, data ...map[string]interface{}) *Renderer {
+	return NewRenderer(component).SetData(data...)
+}
 
-	renderer := NewRenderer(component)
-	return renderer.String()
+func Render(component *Element, data ...map[string]interface{}) string {
+	return render(component, data...).String()
+}
+
+func RenderWithStats(component *Element, data ...map[string]interface{}) string {
+	r := render(component, data...)
+	str := r.String()
+	r.Stats()
+	return str
 }
 
 func RenderBytes(component *Element, data ...map[string]interface{}) []byte {
-	content := Render(component, data...)
-	return []byte(content)
+	return render(component, data...).Bytes()
 }
