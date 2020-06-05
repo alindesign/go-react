@@ -33,7 +33,7 @@ func TestRender(t *testing.T) {
 	})
 
 	t.Run("it should render to bytes an empty div", func(t *testing.T) {
-		div := RenderBytes(CreateElement("div", nil))
+		div := RenderToBytes(CreateElement("div", nil))
 
 		assert.Equal(t, []byte("<div></div>"), div)
 	})
@@ -125,5 +125,31 @@ func TestRenderElement(t *testing.T) {
 		str := Render(Text(value))
 
 		assert.Equal(t, `Sample text &lt;script type=&#34;text/javascript&#34;&gt;alert(&#34;Hi!&#34;);&lt;/script&gt;`, str)
+	})
+
+	t.Run("it should prepend an element correctly", func(t *testing.T) {
+		el := CreateElement("div", Props{
+			"className": "container",
+		})
+
+		el.Prepend(H1(nil, Text("item 1")))
+		el.Prepend(H1(nil, Text("item 2")))
+
+		div := Render(el)
+
+		assert.Equal(t, `<div class="container"><h1>item 2</h1><h1>item 1</h1></div>`, div)
+	})
+
+	t.Run("it should append an element correctly", func(t *testing.T) {
+		el := CreateElement("div", Props{
+			"className": "container",
+		})
+
+		el.Append(H1(nil, Text("item 1")))
+		el.Append(H1(nil, Text("item 2")))
+
+		div := Render(el)
+
+		assert.Equal(t, `<div class="container"><h1>item 1</h1><h1>item 2</h1></div>`, div)
 	})
 }

@@ -133,7 +133,7 @@ html := react.RenderWithStats(react.H1(nil, react.Text("Hello!")))
 // Print rendered nodes and time 
 // <h1>Hello!</h1>
 
-html := react.RenderBytes(react.H1(nil, react.Text("Hello!"))) // render []byte("<h1>Hello!</h1>")
+html := react.RenderToBytes(react.H1(nil, react.Text("Hello!"))) // render []byte("<h1>Hello!</h1>")
 ```
 
 Passing data to context

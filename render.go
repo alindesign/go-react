@@ -15,6 +15,13 @@ func RenderWithStats(component *Element, data ...map[string]interface{}) string 
 	return str
 }
 
-func RenderBytes(component *Element, data ...map[string]interface{}) []byte {
+func RenderToBytes(component *Element, data ...map[string]interface{}) []byte {
 	return render(component, data...).Bytes()
+}
+
+func RenderToBytesWithStats(component *Element, data ...map[string]interface{}) []byte {
+	r := render(component, data...)
+	bytes := r.Bytes()
+	r.Stats()
+	return bytes
 }

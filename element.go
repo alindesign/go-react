@@ -46,3 +46,18 @@ func (e *Element) isVoidElement() bool {
 
 	return false
 }
+
+func (e *Element) Prepend(el *Element) *Element {
+	e.Childs = append([]*Element{el}, e.Childs...)
+	return e
+}
+
+func (e *Element) Append(el *Element) *Element {
+	e.Childs = append(e.Childs, el)
+	return e
+}
+
+func (e *Element) SetProp(prop string, value interface{}) *Element {
+	e.Props[prop] = value
+	return e
+}
