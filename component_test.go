@@ -7,7 +7,7 @@ import (
 
 func helloComponent(Name string) *Element {
 	return Component(func(ctx *Context) *Element {
-		return H1(nil, Text("Hello %s! %s", Name, ctx.GetString("welcomeMessage")))
+		return H1(nil, Textf("Hello %s! %s", Name, ctx.GetString("welcomeMessage")))
 	})
 }
 
@@ -76,7 +76,7 @@ type compStruct struct {
 }
 
 func (c compStruct) Render(ctx *Context) *Element {
-	return H1(nil, Text("Hello %s!", c.Name))
+	return H1(nil, Textf("Hello %s!", c.Name))
 }
 
 type compPStruct struct {
@@ -84,7 +84,7 @@ type compPStruct struct {
 }
 
 func (c *compPStruct) Render(ctx *Context) *Element {
-	return H1(nil, Text("Hello %s!", c.Name))
+	return H1(nil, Textf("Hello %s!", c.Name))
 }
 
 func TestComponentStruct(t *testing.T) {

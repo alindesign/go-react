@@ -11,7 +11,7 @@ func List(num int) *Element {
 	for i := 0; i < num; i++ {
 		items = append(items, CreateElement("li", Props{
 			"className": "list__item item-" + strconv.Itoa(i+1),
-		}, Text("Item %d", i+1)))
+		}, Textf("Item %d", i+1)))
 	}
 
 	return CreateElement("ul", Props{
@@ -151,5 +151,11 @@ func TestRenderElement(t *testing.T) {
 		div := Render(el)
 
 		assert.Equal(t, `<div class="container"><h1>item 1</h1><h1>item 2</h1></div>`, div)
+	})
+
+	t.Run("it should not change text with percentages when there's no value to replace", func(t *testing.T) {
+		assert.Equal(t, `25%f percent of 100 it&#39;s 25`, Render(Text("25%f percent of 100 it's 25")))
+		assert.Equal(t, `25%f percent of 100 it&#39;s 25`, Render(Text("25%f percent of 100 it's 25")))
+		assert.Equal(t, `25% percent of 100 it&#39;s 25`, Render(Text("25% percent of 100 it's 25")))
 	})
 }

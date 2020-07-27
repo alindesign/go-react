@@ -529,7 +529,7 @@ func Time(props Props, children ...*Element) *Element {
 }
 
 func Title(title string, args ...interface{}) *Element {
-	return CreateElement("title", nil, Text(title, args...))
+	return CreateElement("title", nil, Textf(title, args...))
 }
 
 func Tr(props Props, children ...*Element) *Element {

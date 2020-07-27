@@ -5,11 +5,15 @@ import (
 	"html/template"
 )
 
-func Text(format string, args ...interface{}) *Element {
+func Text(text string) *Element {
 	return &Element{
 		Type: TYPE_TEXT,
-		Text: template.HTMLEscapeString(fmt.Sprintf(format, args...)),
+		Text: template.HTMLEscapeString(text),
 	}
+}
+
+func Textf(format string, args ...interface{}) *Element {
+	return Text(fmt.Sprintf(format, args...))
 }
 
 func CSS(css template.CSS) *Element {
