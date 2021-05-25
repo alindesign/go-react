@@ -25,7 +25,7 @@ func List(num int) *react.Element {
     for i := 0; i < num; i++ {
         items = append(items, react.CreateElement("li", react.Props{
             "className": fmt.Sprintf("list__item item-%d", i+1),
-        }, react.Text("Item %d", i+1)))
+        }, react.Textf("Item %d", i+1)))
     }
 
     return react.CreateElement("ul", react.Props{
