@@ -139,7 +139,7 @@ html := react.RenderToBytes(react.H1(nil, react.Text("Hello!"))) // render []byt
 Passing data to context
 ```go
 func Greeter (ctx *react.Context) *react.Element {
-    return react.H1(nil, react.Text("Hello %s!", ctx.GetString("name")))
+    return react.H1(nil, react.Textf("Hello %s!", ctx.GetString("name")))
 }
 html := react.Render(react.Component(Greeter), map[string]interface{}{
     "name": "Joe",
