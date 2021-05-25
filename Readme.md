@@ -157,7 +157,7 @@ html := renderer.String()
 Any text should be a react element instance:
 ```go
 text := react.Text("Hi there!") // Hi there!
-hello := react.Text("Hi there, %s!", "Joe") // Hi there, Joe!
+hello := react.Textf("Hi there, %s!", "Joe") // Hi there, Joe!
 h1 := react.H1(nil, react.Text("Hi there!")) // <h1>Hi there!</h1>
 ```
 
