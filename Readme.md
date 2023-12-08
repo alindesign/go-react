@@ -141,7 +141,7 @@ Passing data to context
 func Greeter (ctx *react.Context) *react.Element {
     return react.H1(nil, react.Textf("Hello %s!", ctx.GetString("name")))
 }
-html := react.Render(react.Component(Greeter), map[string]interface{}{
+html := react.Render(react.Component(Greeter), map[string]any{
     "name": "Joe",
 }) // <h1>Hello Joe!</h1>
 ```

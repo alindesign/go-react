@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type Props map[string]interface{}
+type Props map[string]any
 
 func NewProps() Props {
 	return Props{}

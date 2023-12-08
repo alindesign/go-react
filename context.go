@@ -9,7 +9,7 @@ import (
 var ctxl sync.Mutex
 
 type Context struct {
-	data  map[string]interface{}
+	data  map[string]any
 	nodes int
 	start time.Time
 }
@@ -20,7 +20,7 @@ func (c *Context) CountNode() {
 	ctxl.Unlock()
 }
 
-func (c *Context) SetData(data map[string]interface{}) {
+func (c *Context) SetData(data map[string]any) {
 	c.data = data
 }
 
@@ -29,7 +29,7 @@ func (c *Context) Has(key string) bool {
 	return ok
 }
 
-func (c *Context) Get(key string, defaultValue ...interface{}) interface{} {
+func (c *Context) Get(key string, defaultValue ...any) any {
 	value, ok := c.data[key]
 
 	if ok {
@@ -63,7 +63,7 @@ func (c *Context) GetBool(key string, defaultValue ...bool) bool {
 	return c.Get(key, defVal).(bool)
 }
 
-func (c *Context) Set(key string, data map[string]interface{}) *Context {
+func (c *Context) Set(key string, data any) *Context {
 	c.data[key] = data
 	return c
 }
@@ -78,13 +78,13 @@ func (c *Context) Stats() {
 	log.Printf("go-react: %d nodes rendered in %s", c.nodes, diff)
 }
 
-func NewContextWithData(data map[string]interface{}) *Context {
+func NewContextWithData(data map[string]any) *Context {
 	return &Context{data: data}
 }
 
 func NewContext() *Context {
 	return &Context{
-		data:  map[string]interface{}{},
+		data:  map[string]any{},
 		nodes: 0,
 		start: time.Now(),
 	}

@@ -12,7 +12,7 @@ func Text(text string) *Element {
 	}
 }
 
-func Textf(format string, args ...interface{}) *Element {
+func Textf(format string, args ...any) *Element {
 	return Text(fmt.Sprintf(format, args...))
 }
 
@@ -23,7 +23,7 @@ func CSS(css template.CSS) *Element {
 	}
 }
 
-func CSSString(css string, args ...interface{}) *Element {
+func CSSString(css string, args ...any) *Element {
 	return CSS(template.CSS(fmt.Sprintf(css, args...)))
 }
 
@@ -34,7 +34,7 @@ func JS(js template.JS) *Element {
 	}
 }
 
-func JSString(js string, args ...interface{}) *Element {
+func JSString(js string, args ...any) *Element {
 	return JS(template.JS(fmt.Sprintf(js, args...)))
 }
 
@@ -45,6 +45,6 @@ func HTML(html template.HTML) *Element {
 	}
 }
 
-func HTMLString(html string, args ...interface{}) *Element {
+func HTMLString(html string, args ...any) *Element {
 	return HTML(template.HTML(fmt.Sprintf(html, args...)))
 }
