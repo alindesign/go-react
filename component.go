@@ -5,7 +5,7 @@ type ComponentStruct interface {
 	Render(ctx *Context) *Element
 }
 
-func Component(component interface{}) *Element {
+func Component(component any) *Element {
 	switch x := component.(type) {
 	case func(ctx *Context) *Element:
 		return &Element{

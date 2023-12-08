@@ -41,7 +41,7 @@ func TestRenderClassLike(t *testing.T) {
 		content := Render(Div(nil,
 			Span(nil, Text("span el")),
 			helloComponent("David"),
-		), map[string]interface{}{
+		), map[string]any{
 			"welcomeMessage": "How are you?",
 		})
 

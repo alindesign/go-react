@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-func Comment(comment string, args ...interface{}) *Element {
+func Comment(comment string, args ...any) *Element {
 	return HTMLString("<!-- " + template.HTMLEscapeString(fmt.Sprintf(comment, args...)) + " -->")
 }
 
-func Doctype(doctype ...interface{}) *Element {
+func Doctype(doctype ...any) *Element {
 	d := "html"
 
 	if len(doctype) > 0 {
@@ -235,7 +235,7 @@ func Iframe(props Props, children ...*Element) *Element {
 	return CreateElement("iframe", props, children...)
 }
 
-func Img(source interface{}, alt string, props ...Props) *Element {
+func Img(source any, alt string, props ...Props) *Element {
 	p := NewProps()
 
 	if len(props) > 0 && props[0] != nil {
@@ -286,7 +286,7 @@ func Li(props Props, children ...*Element) *Element {
 	return CreateElement("li", props, children...)
 }
 
-func Link(rel string, href interface{}, props Props) *Element {
+func Link(rel string, href any, props Props) *Element {
 	p := NewProps()
 
 	if props != nil {
@@ -411,7 +411,7 @@ func Samp(props Props, children ...*Element) *Element {
 	return CreateElement("samp", props, children...)
 }
 
-func Script(source interface{}, props Props) *Element {
+func Script(source any, props Props) *Element {
 	var children template.JS
 
 	p := NewProps()
@@ -528,7 +528,7 @@ func Time(props Props, children ...*Element) *Element {
 	return CreateElement("time", props, children...)
 }
 
-func Title(title string, args ...interface{}) *Element {
+func Title(title string, args ...any) *Element {
 	return CreateElement("title", nil, Textf(title, args...))
 }
 

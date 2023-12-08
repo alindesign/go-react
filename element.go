@@ -57,7 +57,7 @@ func (e *Element) Append(el *Element) *Element {
 	return e
 }
 
-func (e *Element) SetProp(prop string, value interface{}) *Element {
+func (e *Element) SetProp(prop string, value any) *Element {
 	e.Props[prop] = value
 	return e
 }

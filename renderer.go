@@ -33,7 +33,7 @@ func (r *Renderer) render(component *Element) string {
 	case TYPE_HTML:
 		return string(component.HTML)
 	case TYPE_FRAGMENT:
-		return r.renderChilds(component)
+		return r.renderChildren(component)
 	case TYPE_ELEMENT:
 		return r.renderTag(component)
 	case TYPE_COMPONENT:
@@ -46,8 +46,8 @@ func (r *Renderer) render(component *Element) string {
 }
 
 func (r *Renderer) childChunks(component *Element) [][]*Element {
-	childsLen := len(component.Childs)
-	possibleChunks := int(math.Ceil(float64(childsLen) / float64(r.MaxConcurrentChunks)))
+	childrenLen := len(component.Childs)
+	possibleChunks := int(math.Ceil(float64(childrenLen) / float64(r.MaxConcurrentChunks)))
 	chunks := make([][]*Element, possibleChunks)
 
 	var chunk = 0
@@ -66,7 +66,7 @@ func (r *Renderer) childChunks(component *Element) [][]*Element {
 	return chunks
 }
 
-func (r *Renderer) renderChilds(component *Element) string {
+func (r *Renderer) renderChildren(component *Element) string {
 	if component == nil || component.Childs == nil {
 		return ""
 	}
@@ -76,13 +76,13 @@ func (r *Renderer) renderChilds(component *Element) string {
 		return ""
 	}
 
-	childs := r.childChunks(component)
-	chunks := make([]strings.Builder, len(childs))
+	children := r.childChunks(component)
+	chunks := make([]strings.Builder, len(children))
 
 	var wg sync.WaitGroup
-	wg.Add(len(childs))
+	wg.Add(len(children))
 
-	for i, child := range childs {
+	for i, child := range children {
 		go func(i int, child []*Element) {
 			var group strings.Builder
 
@@ -124,7 +124,7 @@ func (r *Renderer) renderTag(component *Element) string {
 	}
 
 	if !isVoid {
-		children.WriteString(r.renderChilds(component))
+		children.WriteString(r.renderChildren(component))
 	}
 
 	if component.Tag == "" {
@@ -168,7 +168,7 @@ func (r *Renderer) SetContext(ctx *Context) *Renderer {
 	return r
 }
 
-func (r *Renderer) SetData(data ...map[string]interface{}) *Renderer {
+func (r *Renderer) SetData(data ...map[string]any) *Renderer {
 	if len(data) > 0 {
 		r.Context.SetData(data[0])
 	}
